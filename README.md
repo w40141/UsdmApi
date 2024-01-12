@@ -1,7 +1,23 @@
-# GoCISample
+# pmtool
 
-[![CI](https://github.com/w40141/GoCISample/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/w40141/GoCISample/actions/workflows/ci.yaml)
-[![Vulnerability](https://github.com/w40141/GoCISample/actions/workflows/vulncheck.yaml/badge.svg?branch=main)](https://github.com/w40141/GoCISample/actions/workflows/vulncheck.yaml)
+[![CI](https://github.com/w40141/pmtool/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/w40141/pmtool/actions/workflows/ci.yaml)
+[![Vulnerability](https://github.com/w40141/pmtool/actions/workflows/vulncheck.yaml/badge.svg?branch=main)](https://github.com/pmtool/GoCISample/actions/workflows/vulncheck.yaml)
+![GitHub License](https://img.shields.io/github/license/w40141/pmtool)
+
+pmtool is a project management Web app.
+
+## Development
+
+### Dependency
+
+- Language
+- Task Runner
+- Web Framework
+- OR Mapper
+
+## Setup
+
+## Directories
 
 ```sh
 .
@@ -40,3 +56,7 @@
 ├── main.go
 └── main_test.go
 ```
+
+## License
+
+[MIT](https://github.com/w40141/pmtool/blob/master/LICENSE)
