@@ -1,10 +1,10 @@
 # pmtool
 
 [![CI](https://github.com/w40141/pmtool/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/w40141/pmtool/actions/workflows/ci.yaml)
-[![Vulnerability](https://github.com/w40141/pmtool/actions/workflows/vulncheck.yaml/badge.svg?branch=main)](https://github.com/w40141/pmtool/actions/workflows/vulncheck.yaml)
+[![Vulnerability](https://github.com/w40141/pmtool/actions/workflows/vulncheck.yaml/badge.svg?branch=main)](https://github.com/pmtool/pmtool/actions/workflows/vulncheck.yaml)
 ![GitHub License](https://img.shields.io/github/license/w40141/pmtool)
 
-pmtool is the project management tool written by Golang.
+pmtool is a project management Web app written by Golang.
 
 ## Development
 
