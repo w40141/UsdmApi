@@ -1,4 +1,4 @@
-module github.com/w40141/GoCISample
+module github.com/w40141/ProManeApp
 
 go 1.21
 
@@ -7,6 +7,7 @@ toolchain go1.21.5
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/labstack/echo/v4 v4.11.4
+	github.com/rs/xid v1.5.0
 )
 
 require (
