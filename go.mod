@@ -1,4 +1,4 @@
-module github.com/w40141/ProManeApp
+module github.com/w40141/UsdmApi
 
 go 1.21
 

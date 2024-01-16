@@ -1,10 +1,10 @@
-# ProManeApp
+# UsdmApi
 
-[![CI](https://github.com/w40141/ProManeApp/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/w40141/ProManeApp/actions/workflows/ci.yaml)
-[![Vulnerability](https://github.com/w40141/ProManeApp/actions/workflows/vulncheck.yaml/badge.svg?branch=main)](https://github.com/w40141/ProManeApp/actions/workflows/vulncheck.yaml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/w40141/ProManeApp/blob/main/LICENSE)
+[![CI](https://github.com/w40141/UsdmApi/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/w40141/UsdmApi/actions/workflows/ci.yaml)
+[![Vulnerability](https://github.com/w40141/UsdmApi/actions/workflows/vulncheck.yaml/badge.svg?branch=main)](https://github.com/w40141/UsdmApi/actions/workflows/vulncheck.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/w40141/UsdmApi/blob/main/LICENSE)
 
-ProManeApp is a project management Web app written by Golang.
+UsdmApi is a web app that allows you to manage projects with USDM.
 
 ## Development
 
@@ -59,4 +59,4 @@ ProManeApp is a project management Web app written by Golang.
 
 ## License
 
-[MIT](https://github.com/w40141/ProManeApp/blob/master/LICENSE)
+[MIT](https://github.com/w40141/UsdmApi/blob/master/LICENSE)
