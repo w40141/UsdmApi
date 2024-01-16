@@ -2,7 +2,7 @@
 package entity
 
 import (
-	"github.com/w40141/ProManeApp/domain/vo"
+	"github.com/w40141/UsdmApi/domain/vo"
 )
 
 // Project is the largest unit of human management.
