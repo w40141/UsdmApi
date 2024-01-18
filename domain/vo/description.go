@@ -11,10 +11,6 @@ type Description struct {
 
 // NewDescription creates a new Description.
 func NewDescription(value string) (Description, error) {
-	if value == "" {
-		err := errors.New("Description is required")
-		return Description{}, err
-	}
 	if len(value) > 1000 {
 		err := errors.New("title must be less than or equal to 1000 characters")
 		return Description{}, err
