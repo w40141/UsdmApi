@@ -42,5 +42,4 @@ func main() {
 		_, _ = w.Write([]byte("Hello World"))
 	})
 	log.Fatal(http.ListenAndServe(port, nil))
-	// }
 }
