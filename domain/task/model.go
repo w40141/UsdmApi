@@ -11,10 +11,10 @@ import (
 type Task struct {
 	createdAt    time.Time
 	updatedAt    time.Time
-	id           vo.ID
 	title        vo.Title
 	description  vo.Description
 	reason       vo.Description
+	id           vo.ID
 	projectID    vo.ID
 	ownerID      vo.ID
 	workerID     vo.ID

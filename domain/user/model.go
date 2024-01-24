@@ -11,8 +11,8 @@ import (
 type User struct {
 	createdAt time.Time
 	updatedAt time.Time
-	id        vo.ID
 	name      vo.Name
+	id        vo.ID
 }
 
 // New creates a new User.

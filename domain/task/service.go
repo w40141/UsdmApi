@@ -15,7 +15,7 @@ func Create(
 	ownerID vo.ID,
 	options ...Option,
 ) (Task, error) {
-	id := vo.NewID()
+	id := vo.CreateID()
 	titleVo, e1 := vo.NewTitle(title)
 	if e1 != nil {
 		return Task{}, e1

@@ -7,10 +7,24 @@ import (
 
 // ID is a value object to identify.
 type ID struct {
-	value string
+	value xid.ID
 }
 
 // NewID creates a new ID.
-func NewID() ID {
-	return ID{value: xid.New().String()}
+func NewID(id xid.ID) ID {
+	return ID{value: id}
+}
+
+// CreateID creates a new ID.
+func CreateID() ID {
+	return ID{value: xid.New()}
+}
+
+// FromStringToID reads an ID from its string representation
+func FromStringToID(id string) (ID, error) {
+	i, err := xid.FromString(id)
+	if err != nil {
+		return ID{}, err
+	}
+	return NewID(i), err
 }

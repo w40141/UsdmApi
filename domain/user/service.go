@@ -9,7 +9,7 @@ import (
 
 // Create creates a new User.
 func Create(name string) (User, error) {
-	id := vo.NewID()
+	id := vo.CreateID()
 	nameVo, err := vo.NewName(name)
 	if err != nil {
 		return User{}, err
