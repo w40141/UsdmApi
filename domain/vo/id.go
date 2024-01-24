@@ -5,7 +5,7 @@ import (
 	"github.com/rs/xid"
 )
 
-// ID is a value object for id.
+// ID is a value object to identify.
 type ID struct {
 	value string
 }

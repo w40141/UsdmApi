@@ -2,6 +2,8 @@
 package entity
 
 import (
+	"time"
+
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -10,28 +12,29 @@ type Project struct {
 	id          vo.ID
 	title       vo.Title
 	description vo.Description
-	// addreviator vo.Addreviator
+	ownerID     vo.ID
+	createdAt   time.Time
+	updatedAt   time.Time
 }
 
 // NewProject creates a new Project.
 func NewProject(
-	title string,
-	description string,
-	// addreviator string,
-) (Project, error) {
-	newTitle, e1 := vo.NewTitle(title)
-	if e1 != nil {
-		return Project{}, e1
-	}
-	newDescription, e2 := vo.NewDescription(description)
-	if e2 != nil {
-		return Project{}, e2
-	}
-
+	title vo.Title,
+	description vo.Description,
+	ownerID vo.ID,
+) Project {
 	return Project{
 		id:          vo.NewID(),
-		title:       newTitle,
-		description: newDescription,
-		// addreviator: addreviator,
-	}, nil
+		title:       title,
+		description: description,
+		ownerID:     ownerID,
+	}
+}
+
+// ProjectRepository is a repository interface for Project.
+type ProjectRepository interface {
+	create(project Project) error
+	update(project Project) error
+	get(ids []vo.ID) ([]Project, error)
+	delete(id vo.ID) error
 }
