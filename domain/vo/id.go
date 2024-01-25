@@ -11,12 +11,7 @@ type ID struct {
 }
 
 // NewID creates a new ID.
-func NewID(id xid.ID) ID {
-	return ID{value: id}
-}
-
-// CreateID creates a new ID.
-func CreateID() ID {
+func NewID() ID {
 	return ID{value: xid.New()}
 }
 
@@ -26,5 +21,9 @@ func FromStringToID(id string) (ID, error) {
 	if err != nil {
 		return ID{}, err
 	}
-	return NewID(i), err
+	return ID{value: i}, err
+}
+
+func (i ID) String() string {
+	return i.value.String()
 }

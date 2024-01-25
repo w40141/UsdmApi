@@ -8,49 +8,32 @@ import (
 )
 
 // Create creates a new Project.
-func Create(title string, description string, ownerID string) (Project, error) {
-	titleVo, e1 := vo.NewTitle(title)
-	if e1 != nil {
-		return Project{}, e1
-	}
-	descriptionVo, e2 := vo.NewDescription(description)
-	if e2 != nil {
-		return Project{}, e2
-	}
-	ownerIDVo, e3 := vo.FromStringToID(ownerID)
-	if e3 != nil {
-		return Project{}, e3
-	}
+func Create(
+	title string,
+	description string,
+	ownerID string,
+) (Project, error) {
 	return New(
-		vo.CreateID(),
-		titleVo,
-		descriptionVo,
-		ownerIDVo,
+		vo.NewID().String(),
+		title,
+		description,
+		ownerID,
 		WithCreatedAt(time.Now()),
 		WithUpdatedAt(time.Now()),
-	), nil
+	)
 }
 
 // Update updates a Project.
-func (p Project) Update(title string, description string, ownerID string) (Project, error) {
-	titleVo, e1 := vo.NewTitle(title)
-	if e1 != nil {
-		return Project{}, e1
-	}
-	descriptionVo, e2 := vo.NewDescription(description)
-	if e2 != nil {
-		return Project{}, e2
-	}
-	ownerIDVo, e3 := vo.FromStringToID(ownerID)
-	if e3 != nil {
-		return Project{}, e3
-	}
+func (p Project) Update(
+	title string,
+	description string,
+	ownerID string,
+) (Project, error) {
 	return New(
-		p.id,
-		titleVo,
-		descriptionVo,
-		ownerIDVo,
-		WithCreatedAt(p.createdAt),
+		p.id.String(),
+		title,
+		description,
+		ownerID,
 		WithUpdatedAt(time.Now()),
-	), nil
+	)
 }

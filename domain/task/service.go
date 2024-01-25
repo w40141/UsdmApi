@@ -12,61 +12,44 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	ownerID vo.ID,
+	projectID string,
+	ownerID string,
+	workerID string,
 	options ...Option,
 ) (Task, error) {
-	id := vo.CreateID()
-	titleVo, e1 := vo.NewTitle(title)
-	if e1 != nil {
-		return Task{}, e1
-	}
-	descriptionVo, e2 := vo.NewDescription(description)
-	if e2 != nil {
-		return Task{}, e2
-	}
-	reasonVo, e3 := vo.NewDescription(reason)
-	if e3 != nil {
-		return Task{}, e3
-	}
-	createdAt := time.Now()
-	updatedAt := time.Now()
-	t := Task{
-		id:          id,
-		title:       titleVo,
-		description: descriptionVo,
-		reason:      reasonVo,
-		ownerID:     ownerID,
-		createdAt:   createdAt,
-		updatedAt:   updatedAt,
-	}
-	for _, option := range options {
-		option(&t)
-	}
-	return t, nil
+	options = append(options, WithCreatedAt(time.Now()))
+	options = append(options, WithUpdatedAt(time.Now()))
+	return New(
+		vo.NewID().String(),
+		title,
+		description,
+		reason,
+		projectID,
+		ownerID,
+		workerID,
+		options...,
+	)
 }
 
 // Update updates a Task.
-func (t Task) Update(title string, description string, reason string) (Task, error) {
-	titleVo, e1 := vo.NewTitle(title)
-	if e1 != nil {
-		return Task{}, e1
-	}
-	descriptionVo, e2 := vo.NewDescription(description)
-	if e2 != nil {
-		return Task{}, e2
-	}
-	reasonVo, e3 := vo.NewDescription(reason)
-	if e3 != nil {
-		return Task{}, e3
-	}
+func (t Task) Update(
+	title string,
+	description string,
+	reason string,
+	projectID string,
+	ownerID string,
+	workerID string,
+	options ...Option,
+) (Task, error) {
+	options = append(options, WithUpdatedAt(time.Now()))
 	return New(
-		t.id,
-		titleVo,
-		descriptionVo,
-		reasonVo,
-		t.projectID,
-		t.ownerID,
-		WithCreatedAt(t.createdAt),
-		WithUpdatedAt(time.Now()),
-	), nil
+		t.id.String(),
+		title,
+		description,
+		reason,
+		projectID,
+		ownerID,
+		workerID,
+		options...,
+	)
 }

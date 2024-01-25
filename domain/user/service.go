@@ -9,21 +9,20 @@ import (
 
 // Create creates a new User.
 func Create(name string) (User, error) {
-	id := vo.CreateID()
-	nameVo, err := vo.NewName(name)
-	if err != nil {
-		return User{}, err
-	}
-	createdAt := time.Now()
-	updatedAt := time.Now()
-	return New(id, nameVo, WithCreatedAt(createdAt), WithUpdatedAt(updatedAt)), nil
+	id := vo.NewID().String()
+	return New(
+		id,
+		name,
+		WithCreatedAt(time.Now()),
+		WithUpdatedAt(time.Now()),
+	)
 }
 
 // Update updates a User.
 func (u User) Update(name string) (User, error) {
-	nameVo, err := vo.NewName(name)
-	if err != nil {
-		return User{}, err
-	}
-	return New(u.id, nameVo, WithCreatedAt(u.createdAt), WithUpdatedAt(time.Now())), nil
+	return New(
+		u.id.String(),
+		name,
+		WithUpdatedAt(time.Now()),
+	)
 }

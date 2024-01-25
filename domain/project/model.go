@@ -22,22 +22,38 @@ type Option func(*Project)
 
 // New creates a new Project.
 func New(
-	id vo.ID,
-	title vo.Title,
-	description vo.Description,
-	ownerID vo.ID,
+	id string,
+	title string,
+	description string,
+	ownerID string,
 	options ...Option,
-) Project {
+) (Project, error) {
+	idVo, e1 := vo.FromStringToID(id)
+	if e1 != nil {
+		return Project{}, nil
+	}
+	titleVo, e2 := vo.NewTitle(title)
+	if e2 != nil {
+		return Project{}, e2
+	}
+	descriptionVo, e3 := vo.NewDescription(description)
+	if e3 != nil {
+		return Project{}, e3
+	}
+	ownerIDVo, e4 := vo.FromStringToID(ownerID)
+	if e4 != nil {
+		return Project{}, e4
+	}
 	p := Project{
-		id:          id,
-		title:       title,
-		description: description,
-		ownerID:     ownerID,
+		id:          idVo,
+		title:       titleVo,
+		description: descriptionVo,
+		ownerID:     ownerIDVo,
 	}
 	for _, option := range options {
 		option(&p)
 	}
-	return p
+	return p, nil
 }
 
 // WithCreatedAt sets createdAt to Project.

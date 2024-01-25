@@ -23,26 +23,56 @@ type Task struct {
 
 // New creates a new Task.
 func New(
-	id vo.ID,
-	title vo.Title,
-	description vo.Description,
-	reason vo.Description,
-	projectID vo.ID,
-	ownerID vo.ID,
+	id string,
+	title string,
+	description string,
+	reason string,
+	projectID string,
+	ownerID string,
+	workerID string,
 	options ...Option,
-) Task {
+) (Task, error) {
+	idVo, e1 := vo.FromStringToID(id)
+	if e1 != nil {
+		return Task{}, nil
+	}
+	titleVo, e2 := vo.NewTitle(title)
+	if e2 != nil {
+		return Task{}, e2
+	}
+	descriptionVo, e3 := vo.NewDescription(description)
+	if e3 != nil {
+		return Task{}, e3
+	}
+	reasonVo, e4 := vo.NewDescription(reason)
+	if e4 != nil {
+		return Task{}, e4
+	}
+	projectIDVo, e5 := vo.FromStringToID(projectID)
+	if e5 != nil {
+		return Task{}, e5
+	}
+	ownerIDVo, e6 := vo.FromStringToID(ownerID)
+	if e6 != nil {
+		return Task{}, e6
+	}
+	workerIDVo, e7 := vo.FromStringToID(workerID)
+	if e7 != nil {
+		return Task{}, e7
+	}
 	t := Task{
-		id:          id,
-		title:       title,
-		description: description,
-		reason:      reason,
-		projectID:   projectID,
-		ownerID:     ownerID,
+		id:          idVo,
+		title:       titleVo,
+		description: descriptionVo,
+		reason:      reasonVo,
+		projectID:   projectIDVo,
+		ownerID:     ownerIDVo,
+		workerID:    workerIDVo,
 	}
 	for _, option := range options {
 		option(&t)
 	}
-	return t
+	return t, nil
 }
 
 // Option is a functional option for Task.
@@ -52,13 +82,6 @@ type Option func(*Task)
 func WithParentTask(parentTaskID vo.ID) Option {
 	return func(t *Task) {
 		t.parentTaskID = parentTaskID
-	}
-}
-
-// WithWorker is a functional option for adding worker.
-func WithWorker(workerID vo.ID) Option {
-	return func(t *Task) {
-		t.workerID = workerID
 	}
 }
 

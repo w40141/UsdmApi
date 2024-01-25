@@ -17,18 +17,26 @@ type User struct {
 
 // New creates a new User.
 func New(
-	id vo.ID,
-	name vo.Name,
+	id string,
+	name string,
 	options ...Option,
-) User {
+) (User, error) {
+	idVo, e1 := vo.FromStringToID(id)
+	if e1 != nil {
+		return User{}, nil
+	}
+	nameVo, e2 := vo.NewName(name)
+	if e2 != nil {
+		return User{}, nil
+	}
 	u := User{
-		id:   id,
-		name: name,
+		id:   idVo,
+		name: nameVo,
 	}
 	for _, option := range options {
 		option(&u)
 	}
-	return u
+	return u, nil
 }
 
 // Option is a functional option for User.

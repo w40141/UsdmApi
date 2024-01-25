@@ -11,8 +11,6 @@ import (
 type Epic struct {
 	createdAt   time.Time
 	updatedAt   time.Time
-	startAt     time.Time
-	endAt       time.Time
 	title       vo.Title
 	description vo.Description
 	id          vo.ID
@@ -24,26 +22,38 @@ type Option func(*Epic)
 
 // New creates a new Epic.
 func New(
-	id vo.ID,
-	projectID vo.ID,
-	title vo.Title,
-	description vo.Description,
-	startAt time.Time,
-	endAt time.Time,
+	id string,
+	title string,
+	description string,
+	projectID string,
 	options ...Option,
-) Epic {
+) (Epic, error) {
+	idVo, e1 := vo.FromStringToID(id)
+	if e1 != nil {
+		return Epic{}, nil
+	}
+	titleVo, e2 := vo.NewTitle(title)
+	if e2 != nil {
+		return Epic{}, e2
+	}
+	descriptionVo, e3 := vo.NewDescription(description)
+	if e3 != nil {
+		return Epic{}, e3
+	}
+	projectIDVo, e4 := vo.FromStringToID(projectID)
+	if e4 != nil {
+		return Epic{}, e4
+	}
 	e := Epic{
-		id:          id,
-		projectID:   projectID,
-		title:       title,
-		description: description,
-		startAt:     startAt,
-		endAt:       endAt,
+		id:          idVo,
+		title:       titleVo,
+		description: descriptionVo,
+		projectID:   projectIDVo,
 	}
 	for _, option := range options {
 		option(&e)
 	}
-	return e
+	return e, nil
 }
 
 // WithCreatedAt sets createdAt to Epic.
