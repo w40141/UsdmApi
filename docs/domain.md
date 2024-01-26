@@ -47,26 +47,27 @@ erDiagram
       user_id worker_id
       user_id reporter_id
     }
-    OWNER }o--|{ USER: has
-    USER }|--o{ WORKER: has
-    USER }|--o{ REPORTER: has
-    OWNER }|--|{ PROJECT: has
-    REPORTER ||--o{ TASK: manage
-    WORKER ||--o{ TASK: work
-    TASK }o--|| PROJECT: has
+    USER }|--|| AUTHORITY: has
+    AUTHORITY ||--|| PROJECT: has
+    USER }|--|{ PROJECT: participant
+    TASK }o--|| USER: manage
+    TASK }o--|| USER: work
+    PROJECT ||--o{ SPRINT: has
+    PROJECT ||--|| BACKLOG: has
+    SPRINT ||--|| BELONG: has
+    BACKLOG ||--|| BELONG: has
+    BELONG |o--o{ TASK: belong
     PROJECT ||--o{ EPIC: has
     PROJECT |o--o{ STORY: has
     EPIC |o--o{ STORY: has
-    TASK }o--o| EPIC: has
     STORY ||--o{ TALE: has
-    TASK }o--o| STORY: has
     STORY |o--o{ REQUIREMENT: has
     TALE ||--o{ REQUIREMENT: has
-    TASK }o--o| TALE: has
-    TASK }o--o| REQUIREMENT: has
     TASK ||--o{ TASK: has
-    SPRINT |o--o{ TASK: has
-    TASK }o--o| BACKLOG: has
     STATUS ||--o{ TASK: has
-    BACKLOG ||--|| PROJECT: has
+    ATTACHMENT ||--|| TASK: has
+    ATTACHMENT }o--o| EPIC: has
+    ATTACHMENT }o--o| STORY: has
+    ATTACHMENT }o--o| TALE: has
+    ATTACHMENT }o--o| REQUIREMENT: has
 ```
