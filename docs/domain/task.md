@@ -2,57 +2,78 @@
 
 ```marmeid
 erDiagram
-    USER {
+    MEMBER {
       string id
       string name
     }
-    PROJECT {
+    PROP {
       string id
       string title
       string description
-      user_id owner
+      status_id status
+      prop_id parent_id
+      member_id worker
+      member_id reporter
+      legend_id legend
     }
-    EPIC {
+    PARTICIPANT {
+      string member_id
+      string authority_id
+      string legend_id
+    }
+    LEGEND {
       string id
       string title
       string description
-      user_id owner
-      id parent_id
+      member_id owner
+    }
+    BELONG {
+      string prop_id
+      string sprint_id
+    }
+    SPRINT {
+      string id
+      legend_id legend
+      date start
+      date end
+    }
+    NARRATIVE {
+      string id
+      string title
+      string description
+      string reason
+      legend_id legend
+      member_id owner
+      date start
+      date end
     }
     STORY {
       string id
       string title
       string description
-      user_id owner
-      id parent_id
+      string reason
+      member_id owner
+      parent_id parent
     }
-    TALE {
+    EPISODE {
       string id
       string title
       string description
-      user_id owner
-      id parent_id
+      string reason
+      member_id owner
+      story_id story
     }
-    REQUIREMENT {
+    SCENE {
       string id
       string title
       string description
-      user_id owner
-      id parent_id
+      string reason
+      member_id owner
+      parent_id parent
     }
-    TASK {
-      string id
-      string title
-      string description
-      status_id status
-      task_id parent_id
-      user_id worker_id
-      user_id reporter_id
-      project_id project_id
-    }
-    ATTACHMENT {
-      string belonging_id
-      task_id id
+    INCORPORATION {
+      parent_id belonging
+      prop_id id
     }
     STATUS {
       string id
@@ -62,42 +83,31 @@ erDiagram
       string id
       string name
     }
-    PARTICIPANT {
-      string user_id
-      string name
-      string project_id
-    }
-    BELONG {
-      string task_id
-      string backlog_id
-      string sprint_id
-    }
-    SPRINT {
-      string id
-      string project_id
-      date start
-      date end
-    }
-    USER ||--|{ PARTICIPANT: has
-    TASK }o--o| BELONG: belong
-    PARTICIPANT }|--|{ PROJECT: participant
+    MEMBER ||--|{ PARTICIPANT: has
+    PROP }o--o| BELONG: belong
+    PARTICIPANT }|--|{ LEGEND: participant
     AUTHORITY ||--o{ PARTICIPANT: has
-    SPRINT }o--|| PROJECT: has
-    BELONG }o--o{ SPRINT: has
-    TASK }o--|| PROJECT: has
-    PROJECT ||--o{ EPIC: has
-    PROJECT |o--o{ STORY: has
-    EPIC |o--o{ STORY: has
-    STORY ||--o{ TALE: has
-    STORY |o--o{ REQUIREMENT: has
-    TALE ||--o{ REQUIREMENT: has
-    USER ||--o{ TASK: manage
-    USER ||--o{ TASK: work
-    TASK ||--o{ TASK: has
-    STATUS ||--o{ TASK: has
-    TASK ||--|| ATTACHMENT: has
-    ATTACHMENT }o--o| EPIC: has
-    ATTACHMENT }o--o| STORY: has
-    ATTACHMENT }o--o| TALE: has
-    ATTACHMENT }o--o| REQUIREMENT: has
+    MEMBER ||--|{ LEGEND: owned
+    MEMBER ||--|{ NARRATIVE: owned
+    MEMBER ||--|{ STORY: owned
+    MEMBER ||--|{ EPISODE: owned
+    MEMBER ||--|{ SCENE: owned
+    SPRINT }o--|| LEGEND: has
+    BELONG }o--o| SPRINT: has
+    PROP }o--|| LEGEND: has
+    LEGEND ||--o{ NARRATIVE: has
+    LEGEND |o--o{ STORY: has
+    NARRATIVE |o--o{ STORY: has
+    STORY ||--o{ EPISODE: has
+    STORY |o--o{ SCENE: has
+    EPISODE ||--o{ SCENE: has
+    MEMBER ||--o{ PROP: make
+    MEMBER ||--o{ PROP: use
+    PROP ||--o{ PROP: has
+    STATUS ||--o{ PROP: has
+    PROP ||--|| INCORPORATION: has
+    INCORPORATION }o--o| NARRATIVE: has
+    INCORPORATION }o--o| STORY: has
+    INCORPORATION }o--o| EPISODE: has
+    INCORPORATION }o--o| SCENE: has
 ```
