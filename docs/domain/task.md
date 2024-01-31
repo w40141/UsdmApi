@@ -17,16 +17,22 @@ erDiagram
       member_id user
       member_id creator
       legend_id legend
+      date start
+      date end
+      date created_at
+      date updated_at
     }
     PARTICIPANT {
-      string member_id
-      string authority_id
-      string legend_id
+      member_id member
+      authority_id authority
+      legend_id legend
     }
     LEGEND {
       string id
       string title
       string description
+      date created_at
+      date updated_at
     }
     SPRINT {
       string id
@@ -42,6 +48,8 @@ erDiagram
       legend_id legend
       date start
       date end
+      date created_at
+      date updated_at
     }
     STORY {
       string id
@@ -50,6 +58,10 @@ erDiagram
       string reason
       legend_id legend
       parent_id parent
+      date start
+      date end
+      date created_at
+      date updated_at
     }
     EPISODE {
       string id
@@ -58,6 +70,10 @@ erDiagram
       string reason
       legend_id legend
       story_id story
+      date start
+      date end
+      date created_at
+      date updated_at
     }
     SCENE {
       string id
@@ -66,6 +82,10 @@ erDiagram
       string reason
       legend_id legend
       parent_id parent
+      date start
+      date end
+      date created_at
+      date updated_at
     }
     INCORPORATION {
       parent_id belonging
