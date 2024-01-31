@@ -5,15 +5,17 @@ erDiagram
     MEMBER {
       string id
       string name
+      string authority_id
     }
     PROP {
       string id
       string title
       string description
+      string reason
       status_id status
       prop_id parent_id
-      member_id worker
-      member_id reporter
+      member_id user
+      member_id creator
       legend_id legend
     }
     PARTICIPANT {
@@ -25,11 +27,6 @@ erDiagram
       string id
       string title
       string description
-      member_id owner
-    }
-    BELONG {
-      string prop_id
-      string sprint_id
     }
     SPRINT {
       string id
@@ -43,7 +40,6 @@ erDiagram
       string description
       string reason
       legend_id legend
-      member_id owner
       date start
       date end
     }
@@ -52,7 +48,7 @@ erDiagram
       string title
       string description
       string reason
-      member_id owner
+      legend_id legend
       parent_id parent
     }
     EPISODE {
@@ -60,7 +56,7 @@ erDiagram
       string title
       string description
       string reason
-      member_id owner
+      legend_id legend
       story_id story
     }
     SCENE {
@@ -68,7 +64,7 @@ erDiagram
       string title
       string description
       string reason
-      member_id owner
+      legend_id legend
       parent_id parent
     }
     INCORPORATION {
@@ -84,16 +80,14 @@ erDiagram
       string name
     }
     MEMBER ||--|{ PARTICIPANT: has
-    PROP }o--o| BELONG: belong
     PARTICIPANT }|--|{ LEGEND: participant
     AUTHORITY ||--o{ PARTICIPANT: has
-    MEMBER ||--|{ LEGEND: owned
-    MEMBER ||--|{ NARRATIVE: owned
-    MEMBER ||--|{ STORY: owned
-    MEMBER ||--|{ EPISODE: owned
-    MEMBER ||--|{ SCENE: owned
+    LEGEND ||--|{ NARRATIVE: belong
+    LEGEND ||--|{ STORY: belong
+    LEGEND ||--|{ EPISODE: belong
+    LEGEND ||--|{ SCENE: belong
     SPRINT }o--|| LEGEND: has
-    BELONG }o--o| SPRINT: has
+    PROP }o--o| SPRINT: has
     PROP }o--|| LEGEND: has
     LEGEND ||--o{ NARRATIVE: has
     LEGEND |o--o{ STORY: has
@@ -101,7 +95,7 @@ erDiagram
     STORY ||--o{ EPISODE: has
     STORY |o--o{ SCENE: has
     EPISODE ||--o{ SCENE: has
-    MEMBER ||--o{ PROP: make
+    MEMBER ||--o{ PROP: create
     MEMBER ||--o{ PROP: use
     PROP ||--o{ PROP: has
     STATUS ||--o{ PROP: has
