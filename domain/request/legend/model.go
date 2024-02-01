@@ -4,6 +4,7 @@ package legend
 import (
 	"time"
 
+	"github.com/w40141/UsdmApi/domain/request"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -17,51 +18,72 @@ type Legend struct {
 	id          vo.ID
 }
 
-var _ Type = (*Legend)(nil)
+var (
+	_ request.ParentOfStory = (*Legend)(nil)
+	_ request.LegendType    = (*Legend)(nil)
+)
 
-// Legend implements Type.
-func (*Legend) Legend() error {
+// ParenOfScene implements request.LegendType.
+func (*Legend) ParenOfScene() error {
 	panic("unimplemented")
 }
 
-// Episode implements Type.
-func (*Legend) Episode() error {
+// ParentOfEpisode implements request.LegendType.
+func (*Legend) ParentOfEpisode() error {
 	panic("unimplemented")
 }
 
-// Narrative implements Type.
-func (*Legend) Narrative() error {
+// ParentOfStory implements story.ParentOfStory.
+func (*Legend) ParentOfStory() error {
 	panic("unimplemented")
 }
 
-// Scene implements Type.
-func (*Legend) Scene() error {
+// ParenOfNarrative implements narrative.ParentOfNarrative.
+func (*Legend) ParenOfNarrative() error {
 	panic("unimplemented")
 }
 
-// Story implements Type.
-func (*Legend) Story() error {
-	panic("unimplemented")
-}
-
-// ID implements Type.
-func (p Legend) ID() string {
-	return p.id.String()
-}
-
-// Description implements Type.
+// Description implements request.LegendType.
 func (p Legend) Description() string {
 	return p.description.String()
 }
 
-// Title implements Type.
-func (p Legend) Title() string {
+// ID implements request.LegendType.
+func (p Legend) ID() string {
+	return p.id.String()
+}
+
+// Title implements request.LegendType.
+func (p *Legend) Title() string {
 	return p.title.String()
 }
 
-// Reason implements Type.
-func (p Legend) Reason() string {
-	return p.reason.String()
+// Update updates a Legend.
+func (p Legend) Update(
+	title string,
+	description string,
+	reason string,
+) (Legend, error) {
+	return New(
+		p.id.String(),
+		title,
+		description,
+		reason,
+	)
+}
+
+// Create creates a new Legend.
+func Create(
+	title string,
+	description string,
+	reason string,
+) (Legend, error) {
+	return New(
+		vo.NewID().String(),
+		title,
+		description,
+		reason,
+	)
 }
 
 // Option is a functional option for Legend.

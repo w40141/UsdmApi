@@ -65,14 +65,14 @@ erDiagram
     MEMBER ||--|{ PARTICIPANT: has
     PARTICIPANT }|--|{ LEGEND: participant
     AUTHORITY ||--o{ PARTICIPANT: has
-    LEGEND ||--|{ NARRATIVE: belong
-    LEGEND ||--|{ STORY: belong
-    LEGEND ||--|{ EPISODE: belong
-    LEGEND ||--|{ SCENE: belong
-    LEGEND ||--o{ NARRATIVE: has
+    LEGEND ||--o{ SCENE: belong
+    LEGEND ||--o{ EPISODE: belong
     LEGEND |o--o{ STORY: has
+    LEGEND ||--o{ STORY: belong
+    LEGEND ||--o{ NARRATIVE: belong
+    NARRATIVE |o--o{ SCENE: has
     NARRATIVE |o--o{ STORY: has
-    EPISODE }o--|| STORY: has
-    STORY |o--o{ SCENE: has
-    EPISODE ||--o{ SCENE: has
+    STORY ||--o{ EPISODE: has
+    SCENE }o--o| STORY: has
+    SCENE }o--o| EPISODE: has
 ```

@@ -9,16 +9,3 @@ type Repository interface {
 	Get(ids []vo.ID) ([]Legend, error)
 	Delete(id vo.ID) error
 }
-
-// Type is a interface for Legend.
-type Type interface {
-	Legend() error
-	Narrative() error
-	Story() error
-	Episode() error
-	Scene() error
-	ID() string
-	Title() string
-	Description() string
-	Reason() string
-}

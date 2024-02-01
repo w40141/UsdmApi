@@ -4,6 +4,7 @@ package narrative
 import (
 	"time"
 
+	"github.com/w40141/UsdmApi/domain/request"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -16,49 +17,72 @@ type Narrative struct {
 	reason      vo.Sentence
 	id          vo.ID
 	legendID    vo.ID
-	parentID    vo.ID
 }
 
-var _ Type = (*Narrative)(nil)
+var (
+	_ request.ParentOfStory = (*Narrative)(nil)
+	_ request.NarrativeType = (*Narrative)(nil)
+)
 
-// Description implements Type.
-func (*Narrative) Description() string {
+// ParenOfScene implements request.NarrativeType.
+func (*Narrative) ParenOfScene() error {
 	panic("unimplemented")
 }
 
-// Episode implements Type.
-func (*Narrative) Episode() error {
+// ParentOfStory implements story.ParentOfStory.
+func (*Narrative) ParentOfStory() error {
 	panic("unimplemented")
 }
 
-// ID implements Type.
-func (*Narrative) ID() string {
-	panic("unimplemented")
+// ID implements NarrativeType.
+func (n Narrative) ID() string {
+	return n.id.String()
 }
 
-// Narrative implements Type.
-func (*Narrative) Narrative() error {
-	panic("unimplemented")
+// Description implements NarrativeType.
+func (n Narrative) Description() string {
+	return n.description.String()
 }
 
-// Reason implements Type.
-func (*Narrative) Reason() string {
-	panic("unimplemented")
+// Reason implements NarrativeType.
+func (n Narrative) Reason() string {
+	return n.reason.String()
 }
 
-// Scene implements Type.
-func (*Narrative) Scene() error {
-	panic("unimplemented")
+// Title implements NarrativeType.
+func (n Narrative) Title() string {
+	return n.title.String()
 }
 
-// Story implements Type.
-func (*Narrative) Story() error {
-	panic("unimplemented")
+// Create is create a new Narrative.
+func Create(
+	title string,
+	description string,
+	reason string,
+	legend request.LegendType,
+) (Narrative, error) {
+	return New(
+		vo.NewID().String(),
+		title,
+		description,
+		reason,
+		legend.ID(),
+	)
 }
 
-// Title implements Type.
-func (*Narrative) Title() string {
-	panic("unimplemented")
+// Update updates a Narrative.
+func (n Narrative) Update(
+	title string,
+	description string,
+	reason string,
+) (Narrative, error) {
+	return New(
+		n.id.String(),
+		title,
+		description,
+		reason,
+		n.legendID.String(),
+	)
 }
 
 // Option is a functional option for Narrative.
@@ -71,7 +95,6 @@ func New(
 	description string,
 	reason string,
 	legendID string,
-	parentID string,
 	options ...Option,
 ) (Narrative, error) {
 	idVo, e1 := vo.FromStringToID(id)
@@ -94,17 +117,12 @@ func New(
 	if e5 != nil {
 		return Narrative{}, e5
 	}
-	parentIDVo, e6 := vo.FromStringToID(parentID)
-	if e6 != nil {
-		return Narrative{}, e6
-	}
 	n := Narrative{
 		id:          idVo,
 		title:       titleVo,
 		description: descriptionVo,
 		reason:      reasonVo,
 		legendID:    legendIDVo,
-		parentID:    parentIDVo,
 	}
 	for _, option := range options {
 		option(&n)

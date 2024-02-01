@@ -4,6 +4,7 @@ package story
 import (
 	"time"
 
+	"github.com/w40141/UsdmApi/domain/request"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -17,6 +18,76 @@ type Story struct {
 	id          vo.ID
 	legendID    vo.ID
 	parentID    vo.ID
+}
+
+var (
+	_ request.StoryType       = (*Story)(nil)
+	_ request.ParentOfScene   = (*Story)(nil)
+	_ request.ParentOfEpisode = (*Story)(nil)
+)
+
+// ParenOfEpisode implements request.ParentOfEpisode.
+func (*Story) ParenOfEpisode() error {
+	panic("unimplemented")
+}
+
+// Description implements request.StoryType.
+func (s Story) Description() string {
+	return s.description.String()
+}
+
+// ID implements request.StoryType.
+func (s Story) ID() string {
+	return s.id.String()
+}
+
+// Reason implements request.StoryType.
+func (s Story) Reason() string {
+	return s.reason.String()
+}
+
+// Title implements request.StoryType.
+func (s Story) Title() string {
+	return s.title.String()
+}
+
+// ParenOfScene implements request.StoryType.
+func (*Story) ParenOfScene() error {
+	panic("unimplemented")
+}
+
+// Create creates a new Story.
+func Create(
+	title string,
+	description string,
+	reason string,
+	legend request.LegendType,
+	parent request.ParentOfStory,
+) (Story, error) {
+	return New(
+		vo.NewID().String(),
+		title,
+		description,
+		reason,
+		legend.ID(),
+		parent.ID(),
+	)
+}
+
+// Update updates a Story.
+func (s Story) Update(
+	title string,
+	description string,
+	reason string,
+	parent request.ParentOfStory,
+) (Story, error) {
+	return New(s.id.String(),
+		title,
+		description,
+		reason,
+		s.legendID.String(),
+		parent.ID(),
+	)
 }
 
 // Option is a functional option for Story.

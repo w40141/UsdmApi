@@ -1,11 +1,11 @@
-// Package project is defined for domain model.
-package project
+// Package narrative is defined for domain model.
+package narrative
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
 // Repository is a repository interface for Project.
 type Repository interface {
-	Save(project Project) error
-	Get(ids []vo.ID) ([]Project, error)
+	Save(narrative Narrative) error
+	Get(ids []vo.ID) ([]Narrative, error)
 	Delete(id vo.ID) error
 }
