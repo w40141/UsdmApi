@@ -9,9 +9,7 @@ type ParentOfStory interface {
 
 // Legender is a type of legend.
 type Legender interface {
-	ID() string
-	Description() string
-	Title() string
+	ID() (string, error)
 	ParentOfStory() error
 	ParentOfNarrative() error
 	ParentOfEpisode() error

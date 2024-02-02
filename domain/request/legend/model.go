@@ -6,139 +6,92 @@ import (
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/request"
+	"github.com/w40141/UsdmApi/domain/request/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
-// Legend is the largest unit of human management.
-type Legend struct {
+// T is the largest unit of human management.
+type T struct {
 	createdAt   *time.Time
 	updatedAt   *time.Time
 	title       vo.Title
 	description vo.Sentence
-	reason      vo.Sentence
 	id          vo.ID
 }
 
-var (
-	_ request.ParentOfStory = (*Legend)(nil)
-	_ request.Legender      = (*Legend)(nil)
-)
-
-// ParentOfScene implements request.Legender.
-func (*Legend) ParentOfScene() error {
-	panic("unimplemented")
+// C is a struct for creating a new Legend.
+type C struct {
+	title       vo.Title
+	description vo.Sentence
 }
 
-// ParentOfEpisode implements request.Legender.
-func (*Legend) ParentOfEpisode() error {
-	panic("unimplemented")
-}
-
-// ParentOfStory implements story.ParentOfStory.
-func (*Legend) ParentOfStory() error {
-	panic("unimplemented")
-}
-
-// ParentOfNarrative implements narrative.ParentOfNarrative.
-func (*Legend) ParentOfNarrative() error {
-	panic("unimplemented")
-}
-
-// Description implements request.Legender.
-func (p Legend) Description() string {
-	return p.description.String()
+// D is a struct for deleting a Legend.
+type D struct {
+	id vo.ID
 }
 
 // ID implements request.Legender.
-func (p Legend) ID() string {
-	return p.id.String()
+func (p *T) ID() (string, error) {
+	if p == nil {
+		return "", fmt.Errorf("legend is nil")
+	}
+	return p.id.String(), nil
 }
 
-// Title implements request.Legender.
-func (p *Legend) Title() string {
-	return p.title.String()
+// ParentOfEpisode implements request.Legender.
+func (*T) ParentOfEpisode() error {
+	return nil
 }
+
+// ParentOfNarrative implements request.Legender.
+func (*T) ParentOfNarrative() error {
+	return nil
+}
+
+// ParentOfScene implements request.Legender.
+func (*T) ParentOfScene() error {
+	return nil
+}
+
+// ParentOfStory implements request.Legender.
+func (*T) ParentOfStory() error {
+	return nil
+}
+
+var _ request.Legender = (*T)(nil)
 
 // Update updates a Legend.
-func (p *Legend) Update(
+func (p *T) Update(
 	title string,
 	description string,
-	reason string,
-) (Legend, error) {
+	participant participant.T,
+) (T, error) {
 	if p == nil {
-		return Legend{}, fmt.Errorf("legend is nil")
+		return T{}, fmt.Errorf("legend is nil")
+	}
+	if !participant.CanCreate() {
+		return T{}, fmt.Errorf("participant can not update")
 	}
 	return New(
 		p.id.String(),
 		title,
 		description,
-		reason,
+		WithCreatedAt(p.createdAt),
+		WithUpdatedAt(p.updatedAt),
 	)
 }
 
-// Create creates a new Legend.
-func Create(
-	title string,
-	description string,
-	reason string,
-) (Legend, error) {
-	return New(
-		vo.NewID().String(),
-		title,
-		description,
-		reason,
-	)
-}
-
-// Option is a functional option for Legend.
-type Option func(*Legend)
-
-// New creates a new Legend.
-func New(
-	id string,
-	title string,
-	description string,
-	reason string,
-	options ...Option,
-) (Legend, error) {
-	idVo, e1 := vo.FromStringToID(id)
-	if e1 != nil {
-		return Legend{}, nil
+// Delete deletes a Legend.
+func (p *T) Delete(
+	participant participant.T,
+) (D, error) {
+	if p == nil {
+		return D{}, fmt.Errorf("legend is nil")
 	}
-	titleVo, e2 := vo.NewTitle(title)
-	if e2 != nil {
-		return Legend{}, e2
+	if !participant.CanDelete() {
+		return D{}, fmt.Errorf("participant can not delete")
 	}
-	descriptionVo, e3 := vo.NewSentence(description)
-	if e3 != nil {
-		return Legend{}, e3
-	}
-	reasonVo, e4 := vo.NewSentence(reason)
-	if e4 != nil {
-		return Legend{}, e4
-	}
-	legend := Legend{
-		id:          idVo,
-		title:       titleVo,
-		description: descriptionVo,
-		reason:      reasonVo,
-	}
-	for _, option := range options {
-		option(&legend)
-	}
-	return legend, nil
-}
-
-// WithCreatedAt sets createdAt to Legend.
-func WithCreatedAt(createdAt time.Time) Option {
-	return func(p *Legend) {
-		p.createdAt = &createdAt
-	}
-}
-
-// WithUpdatedAt sets updatedAt to Legend.
-func WithUpdatedAt(updatedAt time.Time) Option {
-	return func(p *Legend) {
-		p.updatedAt = &updatedAt
-	}
+	return D{
+		id: p.id,
+	}, nil
 }
