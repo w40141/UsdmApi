@@ -2,6 +2,7 @@
 package narrative
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/request"
@@ -24,8 +25,8 @@ var (
 	_ request.Narrativer    = (*Narrative)(nil)
 )
 
-// ParenOfScene implements request.NarrativeType.
-func (*Narrative) ParenOfScene() error {
+// ParentOfScene implements request.Narrativer.
+func (*Narrative) ParentOfScene() error {
 	panic("unimplemented")
 }
 
@@ -34,22 +35,22 @@ func (*Narrative) ParentOfStory() error {
 	panic("unimplemented")
 }
 
-// ID implements NarrativeType.
+// ID implements Narrativer.
 func (n Narrative) ID() string {
 	return n.id.String()
 }
 
-// Description implements NarrativeType.
+// Description implements Narrativer.
 func (n Narrative) Description() string {
 	return n.description.String()
 }
 
-// Reason implements NarrativeType.
+// Reason implements Narrativer.
 func (n Narrative) Reason() string {
 	return n.reason.String()
 }
 
-// Title implements NarrativeType.
+// Title implements Narrativer.
 func (n Narrative) Title() string {
 	return n.title.String()
 }
@@ -77,7 +78,7 @@ func (n *Narrative) Update(
 	reason string,
 ) (Narrative, error) {
 	if n == nil {
-		return Create(title, description, reason, nil)
+		return Narrative{}, fmt.Errorf("narrative is nil")
 	}
 	return New(
 		n.id.String(),

@@ -2,6 +2,7 @@
 package episode
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/request"
@@ -22,27 +23,27 @@ type Episode struct {
 
 var _ request.Episoder = (*Episode)(nil)
 
-// Description implements request.EpisodeType.
+// Description implements request.Episoder.
 func (e Episode) Description() string {
 	return e.description.String()
 }
 
-// ID implements request.EpisodeType.
+// ID implements request.Episoder.
 func (e Episode) ID() string {
 	return e.id.String()
 }
 
-// ParenOfScene implements request.EpisodeType.
-func (*Episode) ParenOfScene() error {
+// ParentOfScene implements request.Episoder.
+func (*Episode) ParentOfScene() error {
 	panic("unimplemented")
 }
 
-// Reason implements request.EpisodeType.
+// Reason implements request.Episoder.
 func (e Episode) Reason() string {
 	return e.reason.String()
 }
 
-// Title implements request.EpisodeType.
+// Title implements request.Episoder.
 func (e Episode) Title() string {
 	return e.title.String()
 }
@@ -67,12 +68,15 @@ func Create(
 }
 
 // Update updates a Episode.
-func (e Episode) Update(
+func (e *Episode) Update(
 	title string,
 	description string,
 	reason string,
 	story request.ParentOfEpisode,
 ) (Episode, error) {
+	if e == nil {
+		return Episode{}, fmt.Errorf("episode is nil")
+	}
 	return New(
 		e.id.String(),
 		title,
@@ -120,7 +124,7 @@ func New(
 	if e6 != nil {
 		return Episode{}, e6
 	}
-	t := Episode{
+	e := Episode{
 		id:          idVo,
 		title:       titleVo,
 		description: descriptionVo,
@@ -129,9 +133,9 @@ func New(
 		storyID:     storyIDVo,
 	}
 	for _, option := range options {
-		option(&t)
+		option(&e)
 	}
-	return t, nil
+	return e, nil
 }
 
 // WithCreatedAt is a functional option for adding created at.

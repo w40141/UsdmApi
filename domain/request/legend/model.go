@@ -2,6 +2,7 @@
 package legend
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/request"
@@ -23,12 +24,12 @@ var (
 	_ request.Legender      = (*Legend)(nil)
 )
 
-// ParenOfScene implements request.LegendType.
-func (*Legend) ParenOfScene() error {
+// ParentOfScene implements request.Legender.
+func (*Legend) ParentOfScene() error {
 	panic("unimplemented")
 }
 
-// ParentOfEpisode implements request.LegendType.
+// ParentOfEpisode implements request.Legender.
 func (*Legend) ParentOfEpisode() error {
 	panic("unimplemented")
 }
@@ -38,22 +39,22 @@ func (*Legend) ParentOfStory() error {
 	panic("unimplemented")
 }
 
-// ParenOfNarrative implements narrative.ParentOfNarrative.
-func (*Legend) ParenOfNarrative() error {
+// ParentOfNarrative implements narrative.ParentOfNarrative.
+func (*Legend) ParentOfNarrative() error {
 	panic("unimplemented")
 }
 
-// Description implements request.LegendType.
+// Description implements request.Legender.
 func (p Legend) Description() string {
 	return p.description.String()
 }
 
-// ID implements request.LegendType.
+// ID implements request.Legender.
 func (p Legend) ID() string {
 	return p.id.String()
 }
 
-// Title implements request.LegendType.
+// Title implements request.Legender.
 func (p *Legend) Title() string {
 	return p.title.String()
 }
@@ -65,7 +66,7 @@ func (p *Legend) Update(
 	reason string,
 ) (Legend, error) {
 	if p == nil {
-		return Create(title, description, reason)
+		return Legend{}, fmt.Errorf("legend is nil")
 	}
 	return New(
 		p.id.String(),

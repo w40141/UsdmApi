@@ -13,3 +13,7 @@ func NewName(name string) (Name, error) {
 	}
 	return Name{value: name}, nil
 }
+
+func (n Name) String() string {
+	return n.value
+}

@@ -2,6 +2,7 @@
 package scene
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/request"
@@ -62,12 +63,15 @@ func Create(
 }
 
 // Update updates a Scene.
-func (s Scene) Update(
+func (s *Scene) Update(
 	title string,
 	description string,
 	reason string,
 	story request.ParentOfScene,
 ) (Scene, error) {
+	if s == nil {
+		return Scene{}, fmt.Errorf("scene is nil")
+	}
 	return New(
 		s.id.String(),
 		title,

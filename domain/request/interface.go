@@ -13,9 +13,9 @@ type Legender interface {
 	Description() string
 	Title() string
 	ParentOfStory() error
-	ParenOfNarrative() error
+	ParentOfNarrative() error
 	ParentOfEpisode() error
-	ParenOfScene() error
+	ParentOfScene() error
 }
 
 // Narrativer is a type of narrative.
@@ -25,7 +25,7 @@ type Narrativer interface {
 	Title() string
 	Reason() string
 	ParentOfStory() error
-	ParenOfScene() error
+	ParentOfScene() error
 }
 
 // Storyer is a type of story.
@@ -34,8 +34,8 @@ type Storyer interface {
 	Description() string
 	Title() string
 	Reason() string
-	ParenOfScene() error
-	ParenOfEpisode() error
+	ParentOfScene() error
+	ParentOfEpisode() error
 }
 
 // Episoder is a type of episode.
@@ -44,7 +44,7 @@ type Episoder interface {
 	Description() string
 	Title() string
 	Reason() string
-	ParenOfScene() error
+	ParentOfScene() error
 }
 
 // Scener is a type of scene.
@@ -57,12 +57,12 @@ type Scener interface {
 
 // ParentOfScene is a type that can be the parent of scene.
 type ParentOfScene interface {
-	ParenOfScene() error
+	ParentOfScene() error
 	ID() string
 }
 
 // ParentOfEpisode is a type that can be the parent of episode.
 type ParentOfEpisode interface {
-	ParenOfEpisode() error
+	ParentOfEpisode() error
 	ID() string
 }

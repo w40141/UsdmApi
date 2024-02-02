@@ -2,6 +2,7 @@
 package story
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/request"
@@ -26,27 +27,27 @@ var (
 	_ request.ParentOfEpisode = (*Story)(nil)
 )
 
-// ParenOfEpisode implements request.ParentOfEpisode.
-func (*Story) ParenOfEpisode() error {
+// ParentOfEpisode implements request.ParentOfEpisode.
+func (*Story) ParentOfEpisode() error {
 	panic("unimplemented")
 }
 
-// Description implements request.StoryType.
+// Description implements request.Storyer.
 func (s Story) Description() string {
 	return s.description.String()
 }
 
-// ID implements request.StoryType.
+// ID implements request.Storyer.
 func (s Story) ID() string {
 	return s.id.String()
 }
 
-// Reason implements request.StoryType.
+// Reason implements request.Storyer.
 func (s Story) Reason() string {
 	return s.reason.String()
 }
 
-// Title implements request.StoryType.
+// Title implements request.Storyer.
 func (s Story) Title() string {
 	return s.title.String()
 }
@@ -71,8 +72,8 @@ func (s Story) UpdateAt() (time.Time, bool) {
 	return *s.updateAt, s.updateAt != nil
 }
 
-// ParenOfScene implements request.StoryType.
-func (*Story) ParenOfScene() error {
+// ParentOfScene implements request.Storyer.
+func (*Story) ParentOfScene() error {
 	panic("unimplemented")
 }
 
@@ -95,13 +96,16 @@ func Create(
 }
 
 // Update updates a Story.
-func (s Story) Update(
+func (s *Story) Update(
 	title string,
 	description string,
 	reason string,
 	parent request.ParentOfStory,
 ) (Story, error) {
-	return New(s.id.String(),
+	if s == nil {
+		return Story{}, fmt.Errorf("story is nil")
+	}
+	return New(s.ID(),
 		title,
 		description,
 		reason,
