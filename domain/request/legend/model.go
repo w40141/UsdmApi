@@ -10,8 +10,8 @@ import (
 
 // Legend is the largest unit of human management.
 type Legend struct {
-	createdAt   time.Time
-	updatedAt   time.Time
+	createdAt   *time.Time
+	updatedAt   *time.Time
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
@@ -20,7 +20,7 @@ type Legend struct {
 
 var (
 	_ request.ParentOfStory = (*Legend)(nil)
-	_ request.LegendType    = (*Legend)(nil)
+	_ request.Legender      = (*Legend)(nil)
 )
 
 // ParenOfScene implements request.LegendType.
@@ -59,11 +59,14 @@ func (p *Legend) Title() string {
 }
 
 // Update updates a Legend.
-func (p Legend) Update(
+func (p *Legend) Update(
 	title string,
 	description string,
 	reason string,
 ) (Legend, error) {
+	if p == nil {
+		return Create(title, description, reason)
+	}
 	return New(
 		p.id.String(),
 		title,
@@ -128,13 +131,13 @@ func New(
 // WithCreatedAt sets createdAt to Legend.
 func WithCreatedAt(createdAt time.Time) Option {
 	return func(p *Legend) {
-		p.createdAt = createdAt
+		p.createdAt = &createdAt
 	}
 }
 
 // WithUpdatedAt sets updatedAt to Legend.
 func WithUpdatedAt(updatedAt time.Time) Option {
 	return func(p *Legend) {
-		p.updatedAt = updatedAt
+		p.updatedAt = &updatedAt
 	}
 }

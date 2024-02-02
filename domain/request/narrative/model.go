@@ -10,8 +10,8 @@ import (
 
 // Narrative is an entity object for user Narrative or usecase.
 type Narrative struct {
-	createdAt   time.Time
-	updatedAt   time.Time
+	createdAt   *time.Time
+	updatedAt   *time.Time
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
@@ -21,7 +21,7 @@ type Narrative struct {
 
 var (
 	_ request.ParentOfStory = (*Narrative)(nil)
-	_ request.NarrativeType = (*Narrative)(nil)
+	_ request.Narrativer    = (*Narrative)(nil)
 )
 
 // ParenOfScene implements request.NarrativeType.
@@ -59,7 +59,7 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	legend request.LegendType,
+	legend request.Legender,
 ) (Narrative, error) {
 	return New(
 		vo.NewID().String(),
@@ -71,11 +71,14 @@ func Create(
 }
 
 // Update updates a Narrative.
-func (n Narrative) Update(
+func (n *Narrative) Update(
 	title string,
 	description string,
 	reason string,
 ) (Narrative, error) {
+	if n == nil {
+		return Create(title, description, reason, nil)
+	}
 	return New(
 		n.id.String(),
 		title,
@@ -133,13 +136,13 @@ func New(
 // WithCreatedAt sets createdAt to Narrative.
 func WithCreatedAt(createdAt time.Time) Option {
 	return func(e *Narrative) {
-		e.createdAt = createdAt
+		e.createdAt = &createdAt
 	}
 }
 
 // WithUpdatedAt sets updatedAt to Narrative.
 func WithUpdatedAt(updatedAt time.Time) Option {
 	return func(e *Narrative) {
-		e.updatedAt = updatedAt
+		e.updatedAt = &updatedAt
 	}
 }

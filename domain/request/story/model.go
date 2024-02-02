@@ -10,8 +10,8 @@ import (
 
 // Story is an entity object for user story or usecase.
 type Story struct {
-	createAt    time.Time
-	updateAt    time.Time
+	createAt    *time.Time
+	updateAt    *time.Time
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
@@ -21,7 +21,7 @@ type Story struct {
 }
 
 var (
-	_ request.StoryType       = (*Story)(nil)
+	_ request.Storyer         = (*Story)(nil)
 	_ request.ParentOfScene   = (*Story)(nil)
 	_ request.ParentOfEpisode = (*Story)(nil)
 )
@@ -51,6 +51,26 @@ func (s Story) Title() string {
 	return s.title.String()
 }
 
+// LegendID getter
+func (s Story) LegendID() string {
+	return s.legendID.String()
+}
+
+// ParentID getter
+func (s Story) ParentID() string {
+	return s.parentID.String()
+}
+
+// CreateAt getter
+func (s Story) CreateAt() (time.Time, bool) {
+	return *s.createAt, s.createAt != nil
+}
+
+// UpdateAt getter
+func (s Story) UpdateAt() (time.Time, bool) {
+	return *s.updateAt, s.updateAt != nil
+}
+
 // ParenOfScene implements request.StoryType.
 func (*Story) ParenOfScene() error {
 	panic("unimplemented")
@@ -61,7 +81,7 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	legend request.LegendType,
+	legend request.Legender,
 	parent request.ParentOfStory,
 ) (Story, error) {
 	return New(
@@ -144,13 +164,13 @@ func New(
 // WithCreateAt is a functional option for adding create time.
 func WithCreateAt(createAt time.Time) func(*Story) {
 	return func(s *Story) {
-		s.createAt = createAt
+		s.createAt = &createAt
 	}
 }
 
 // WithUpdateAt is a functional option for adding update time.
 func WithUpdateAt(updateAt time.Time) func(*Story) {
 	return func(s *Story) {
-		s.updateAt = updateAt
+		s.updateAt = &updateAt
 	}
 }

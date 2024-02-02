@@ -7,8 +7,8 @@ type ParentOfStory interface {
 	ID() string
 }
 
-// LegendType is a type of legend.
-type LegendType interface {
+// Legender is a type of legend.
+type Legender interface {
 	ID() string
 	Description() string
 	Title() string
@@ -18,8 +18,8 @@ type LegendType interface {
 	ParenOfScene() error
 }
 
-// NarrativeType is a type of narrative.
-type NarrativeType interface {
+// Narrativer is a type of narrative.
+type Narrativer interface {
 	ID() string
 	Description() string
 	Title() string
@@ -28,8 +28,8 @@ type NarrativeType interface {
 	ParenOfScene() error
 }
 
-// StoryType is a type of story.
-type StoryType interface {
+// Storyer is a type of story.
+type Storyer interface {
 	ID() string
 	Description() string
 	Title() string
@@ -38,8 +38,8 @@ type StoryType interface {
 	ParenOfEpisode() error
 }
 
-// EpisodeType is a type of episode.
-type EpisodeType interface {
+// Episoder is a type of episode.
+type Episoder interface {
 	ID() string
 	Description() string
 	Title() string
@@ -47,8 +47,8 @@ type EpisodeType interface {
 	ParenOfScene() error
 }
 
-// SceneType is a type of scene.
-type SceneType interface {
+// Scener is a type of scene.
+type Scener interface {
 	ID() string
 	Description() string
 	Title() string

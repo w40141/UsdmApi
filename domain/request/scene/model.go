@@ -10,8 +10,8 @@ import (
 
 // Scene is an entity object for user story or usecase.
 type Scene struct {
-	createdAt   time.Time
-	updatedAt   time.Time
+	createdAt   *time.Time
+	updatedAt   *time.Time
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
@@ -20,7 +20,7 @@ type Scene struct {
 	legendID    vo.ID
 }
 
-var _ request.SceneType = (*Scene)(nil)
+var _ request.Scener = (*Scene)(nil)
 
 // Description implements request.SceneType.
 func (s Scene) Description() string {
@@ -47,7 +47,7 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	legend request.LegendType,
+	legend request.Legender,
 	story request.ParentOfScene,
 ) (Scene, error) {
 	id := vo.NewID().String()
@@ -132,13 +132,13 @@ func New(
 // WithCreatedAt is a functional option for adding created at.
 func WithCreatedAt(createdAt time.Time) Option {
 	return func(t *Scene) {
-		t.createdAt = createdAt
+		t.createdAt = &createdAt
 	}
 }
 
 // WithUpdatedAt is a functional option for adding updated at.
 func WithUpdatedAt(updatedAt time.Time) Option {
 	return func(t *Scene) {
-		t.updatedAt = updatedAt
+		t.updatedAt = &updatedAt
 	}
 }

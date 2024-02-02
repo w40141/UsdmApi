@@ -10,8 +10,8 @@ import (
 
 // Episode is an entity object for user story or usecase.
 type Episode struct {
-	createdAt   time.Time
-	updatedAt   time.Time
+	createdAt   *time.Time
+	updatedAt   *time.Time
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
@@ -20,7 +20,7 @@ type Episode struct {
 	legendID    vo.ID
 }
 
-var _ request.EpisodeType = (*Episode)(nil)
+var _ request.Episoder = (*Episode)(nil)
 
 // Description implements request.EpisodeType.
 func (e Episode) Description() string {
@@ -52,7 +52,7 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	legend request.LegendType,
+	legend request.Legender,
 	story request.ParentOfEpisode,
 ) (Episode, error) {
 	id := vo.NewID().String()
@@ -137,13 +137,13 @@ func New(
 // WithCreatedAt is a functional option for adding created at.
 func WithCreatedAt(createdAt time.Time) Option {
 	return func(t *Episode) {
-		t.createdAt = createdAt
+		t.createdAt = &createdAt
 	}
 }
 
 // WithUpdatedAt is a functional option for adding updated at.
 func WithUpdatedAt(updatedAt time.Time) Option {
 	return func(t *Episode) {
-		t.updatedAt = updatedAt
+		t.updatedAt = &updatedAt
 	}
 }
