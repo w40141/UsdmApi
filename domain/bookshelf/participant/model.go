@@ -4,19 +4,19 @@ package participant
 import (
 	"fmt"
 
-	"github.com/w40141/UsdmApi/domain/request/authority"
+	"github.com/w40141/UsdmApi/domain/bookshelf/authority"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
-// T is an entity object for Participant.
-type T struct {
+// P is an entity object for Participant.
+type P struct {
 	authority authority.T
 	memberID  vo.ID
 	legendID  vo.ID
 }
 
 // CanCreate returns whether the participant can create.
-func (p *T) CanCreate() bool {
+func (p *P) CanCreate() bool {
 	if p.authority == nil {
 		return false
 	}
@@ -24,7 +24,7 @@ func (p *T) CanCreate() bool {
 }
 
 // CanDelete returns whether the participant can delete.
-func (p *T) CanDelete() bool {
+func (p *P) CanDelete() bool {
 	if p.authority == nil {
 		return false
 	}
@@ -32,13 +32,13 @@ func (p *T) CanDelete() bool {
 }
 
 // Update is update a authority of Participant.
-func (p *T) Update(
+func (p *P) Update(
 	authority authority.T,
-) (T, error) {
+) (P, error) {
 	if p == nil {
-		return T{}, fmt.Errorf("participant is nil")
+		return P{}, fmt.Errorf("participant is nil")
 	}
-	return T{
+	return P{
 		memberID:  p.memberID,
 		legendID:  p.legendID,
 		authority: authority,

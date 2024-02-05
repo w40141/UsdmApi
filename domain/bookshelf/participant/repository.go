@@ -7,8 +7,8 @@ import (
 
 // Repository is a repository for Participant.
 type Repository interface {
-	Save(T) error
-	UpdateParticipant(T) error
-	GetParticipants(vo.ID) ([]T, error)
+	Save(P) error
+	UpdateParticipant(P) error
+	GetParticipants(vo.ID) ([]P, error)
 	DeleteParticipant(vo.ID) error
 }

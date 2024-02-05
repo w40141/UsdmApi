@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/request"
+	"github.com/w40141/UsdmApi/domain/bookshelf"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -18,10 +18,10 @@ type Episode struct {
 	reason      vo.Sentence
 	storyID     vo.ID
 	id          vo.ID
-	legendID    vo.ID
+	bookID      vo.ID
 }
 
-var _ request.Episoder = (*Episode)(nil)
+var _ bookshelf.Episoder = (*Episode)(nil)
 
 // Description implements request.Episoder.
 func (e Episode) Description() string {
@@ -29,8 +29,8 @@ func (e Episode) Description() string {
 }
 
 // ID implements request.Episoder.
-func (e Episode) ID() string {
-	return e.id.String()
+func (e Episode) ID() vo.ID {
+	return e.id
 }
 
 // ParentOfScene implements request.Episoder.
@@ -53,8 +53,8 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	legend request.Legender,
-	story request.ParentOfEpisode,
+	book bookshelf.Booker,
+	story bookshelf.ParentOfEpisode,
 ) (Episode, error) {
 	id := vo.NewID().String()
 	return New(
@@ -62,7 +62,7 @@ func Create(
 		title,
 		description,
 		reason,
-		legend.ID(),
+		book.ID(),
 		story.ID(),
 	)
 }
@@ -72,7 +72,7 @@ func (e *Episode) Update(
 	title string,
 	description string,
 	reason string,
-	story request.ParentOfEpisode,
+	story bookshelf.ParentOfEpisode,
 ) (Episode, error) {
 	if e == nil {
 		return Episode{}, fmt.Errorf("episode is nil")
@@ -82,7 +82,7 @@ func (e *Episode) Update(
 		title,
 		description,
 		reason,
-		e.legendID.String(),
+		e.bookID.String(),
 		story.ID(),
 	)
 }
@@ -96,7 +96,7 @@ func New(
 	title string,
 	description string,
 	reason string,
-	legendID string,
+	bookID string,
 	storyID string,
 	options ...Option,
 ) (Episode, error) {
@@ -116,7 +116,7 @@ func New(
 	if e4 != nil {
 		return Episode{}, e4
 	}
-	legendIDVo, e5 := vo.FromStringToID(legendID)
+	bookIDVo, e5 := vo.FromStringToID(bookID)
 	if e5 != nil {
 		return Episode{}, e5
 	}
@@ -129,7 +129,7 @@ func New(
 		title:       titleVo,
 		description: descriptionVo,
 		reason:      reasonVo,
-		legendID:    legendIDVo,
+		bookID:      bookIDVo,
 		storyID:     storyIDVo,
 	}
 	for _, option := range options {

@@ -2,7 +2,7 @@
 package participant
 
 import (
-	"github.com/w40141/UsdmApi/domain/request/authority"
+	"github.com/w40141/UsdmApi/domain/bookshelf/authority"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -11,16 +11,16 @@ func New(
 	memberID string,
 	legendID string,
 	authority authority.T,
-) (T, error) {
+) (P, error) {
 	memberIDVo, e1 := vo.FromStringToID(memberID)
 	if e1 != nil {
-		return T{}, e1
+		return P{}, e1
 	}
 	lengendIDVo, e2 := vo.FromStringToID(legendID)
 	if e2 != nil {
-		return T{}, e2
+		return P{}, e2
 	}
-	return T{
+	return P{
 		memberID:  memberIDVo,
 		legendID:  lengendIDVo,
 		authority: authority,
