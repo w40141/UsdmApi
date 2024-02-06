@@ -3,7 +3,7 @@ package authority
 
 var _ T = (*Editor)(nil)
 
-// Editor is an entity object for user Editor or usecase.
+// Editor is the authority of editor.
 type Editor struct{}
 
 // CanCreate returns whether the editor can create.

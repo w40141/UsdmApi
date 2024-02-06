@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/bookshelf"
+	"github.com/w40141/UsdmApi/domain/shelf"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -21,7 +21,7 @@ type Episode struct {
 	bookID      vo.ID
 }
 
-var _ bookshelf.Episoder = (*Episode)(nil)
+var _ shelf.Episoder = (*Episode)(nil)
 
 // Description implements request.Episoder.
 func (e Episode) Description() string {
@@ -53,8 +53,8 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	book bookshelf.Booker,
-	story bookshelf.ParentOfEpisode,
+	book shelf.Booker,
+	story shelf.ParentOfEpisode,
 ) (Episode, error) {
 	id := vo.NewID().String()
 	return New(

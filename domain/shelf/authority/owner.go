@@ -1,7 +1,7 @@
 // Package authority defines the entity object for user authority.
 package authority
 
-// Owner is an entity object for user Owner or usecase.
+// Owner is the authority of owner.
 type Owner struct{}
 
 var _ T = (*Owner)(nil)

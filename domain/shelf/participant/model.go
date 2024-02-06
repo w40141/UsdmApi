@@ -45,8 +45,8 @@ func (p *T) Update(
 	}, nil
 }
 
-// Create is create
-func (p *T) Create(
+// Invite is create a new Participant.
+func (p *T) Invite(
 	memberID string,
 	legendID string,
 	authority authority.T,

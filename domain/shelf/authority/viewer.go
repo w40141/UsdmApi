@@ -3,7 +3,7 @@ package authority
 
 var _ T = (*Viewer)(nil)
 
-// Viewer is an entity object for user Viewer or usecase.
+// Viewer is the authority of viewer.
 type Viewer struct{}
 
 // CanCreate returns whether the Viewer can create.
