@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/bookshelf"
-	"github.com/w40141/UsdmApi/domain/bookshelf/participant"
+	"github.com/w40141/UsdmApi/domain/shelf"
+	"github.com/w40141/UsdmApi/domain/shelf/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -30,6 +30,16 @@ type D struct {
 	id vo.ID
 }
 
+// CanDelete implements shelf.Deletable.
+func (*D) CanDelete() bool {
+	return true
+}
+
+// ID implements shelf.Deletable.
+func (*D) ID() vo.ID {
+	panic("unimplemented")
+}
+
 // ID implements bookshelf.Book.
 func (t T) ID() vo.ID {
 	return t.id
@@ -50,13 +60,16 @@ func (*T) ParentOfStory() error {
 	return nil
 }
 
-var _ bookshelf.Booker = (*T)(nil)
+var (
+	_ shelf.Booker    = (*T)(nil)
+	_ shelf.Deletable = (*D)(nil)
+)
 
 // Update updates a Book.
 func (t *T) Update(
 	title string,
 	description string,
-	participant participant.P,
+	participant participant.T,
 ) (T, error) {
 	if t == nil {
 		return T{}, fmt.Errorf("book is nil")
@@ -75,7 +88,7 @@ func (t *T) Update(
 
 // Delete deletes a Book.
 func (t *T) Delete(
-	participant participant.P,
+	participant participant.T,
 ) (D, error) {
 	if t == nil {
 		return D{}, fmt.Errorf("book is nil")

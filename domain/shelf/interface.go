@@ -1,5 +1,5 @@
 // Package bookshelf is defined for domain model.
-package bookshelf
+package shelf
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
@@ -54,7 +54,8 @@ type ParentOfEpisode interface {
 	ID() vo.ID
 }
 
+// Deletable is a type that can be deleted.
 type Deletable interface {
 	ID() vo.ID
-	CanDelete() error
+	CanDelete() bool
 }

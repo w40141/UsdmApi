@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/request"
+	"github.com/w40141/UsdmApi/domain/shelf"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -22,9 +22,9 @@ type Story struct {
 }
 
 var (
-	_ request.Storyer         = (*Story)(nil)
-	_ request.ParentOfScene   = (*Story)(nil)
-	_ request.ParentOfEpisode = (*Story)(nil)
+	_ shelf.Storyer         = (*Story)(nil)
+	_ shelf.ParentOfScene   = (*Story)(nil)
+	_ shelf.ParentOfEpisode = (*Story)(nil)
 )
 
 // ParentOfEpisode implements request.ParentOfEpisode.

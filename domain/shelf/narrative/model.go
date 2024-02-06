@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/bookshelf"
-	"github.com/w40141/UsdmApi/domain/bookshelf/participant"
+	"github.com/w40141/UsdmApi/domain/shelf"
+	"github.com/w40141/UsdmApi/domain/shelf/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
-// N is an entity object for user N or usecase.
-type N struct {
+// T is an entity object for user T or usecase.
+type T struct {
 	createdAt   *time.Time
 	updatedAt   *time.Time
 	title       vo.Title
@@ -35,48 +35,48 @@ type D struct {
 }
 
 var (
-	_ bookshelf.ParentOfStory = (*N)(nil)
-	_ bookshelf.Narrativer    = (*N)(nil)
+	_ shelf.ParentOfStory = (*T)(nil)
+	_ shelf.Narrativer    = (*T)(nil)
 )
 
 // ParentOfScene implements request.Narrativer.
-func (*N) ParentOfScene() error {
+func (*T) ParentOfScene() error {
 	panic("unimplemented")
 }
 
 // ParentOfStory implements story.ParentOfStory.
-func (*N) ParentOfStory() error {
+func (*T) ParentOfStory() error {
 	panic("unimplemented")
 }
 
 // ID implements Narrativer.
-func (n N) ID() vo.ID {
+func (n T) ID() vo.ID {
 	return n.id
 }
 
 // Description implements Narrativer.
-func (n N) Description() string {
+func (n T) Description() string {
 	return n.description.String()
 }
 
 // Reason implements Narrativer.
-func (n N) Reason() string {
+func (n T) Reason() string {
 	return n.reason.String()
 }
 
 // Title implements Narrativer.
-func (n N) Title() string {
+func (n T) Title() string {
 	return n.title.String()
 }
 
 // Update updates a Narrative.
-func (n *N) Update(
+func (n *T) Update(
 	title string,
 	description string,
 	reason string,
-) (N, error) {
+) (T, error) {
 	if n == nil {
-		return N{}, fmt.Errorf("narrative is nil")
+		return T{}, fmt.Errorf("narrative is nil")
 	}
 	return New(
 		n.id.String(),
@@ -88,8 +88,8 @@ func (n *N) Update(
 }
 
 // Delete deletes a Narrative.
-func (n *N) Delete(
-	participant participant.P,
+func (n *T) Delete(
+	participant participant.T,
 ) (D, error) {
 	if n == nil {
 		return D{}, fmt.Errorf("book is nil")

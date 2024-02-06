@@ -4,13 +4,13 @@ package narrative
 import (
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/bookshelf"
-	"github.com/w40141/UsdmApi/domain/bookshelf/participant"
+	"github.com/w40141/UsdmApi/domain/shelf"
+	"github.com/w40141/UsdmApi/domain/shelf/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
 // Option is a functional option for Narrative.
-type Option func(*N)
+type Option func(*T)
 
 // New creates a new Narrative.
 func New(
@@ -20,28 +20,28 @@ func New(
 	reason string,
 	bookID string,
 	options ...Option,
-) (N, error) {
+) (T, error) {
 	idVo, e1 := vo.FromStringToID(id)
 	if e1 != nil {
-		return N{}, nil
+		return T{}, nil
 	}
 	titleVo, e2 := vo.NewTitle(title)
 	if e2 != nil {
-		return N{}, e2
+		return T{}, e2
 	}
 	descriptionVo, e3 := vo.NewSentence(description)
 	if e3 != nil {
-		return N{}, e3
+		return T{}, e3
 	}
 	reasonVo, e4 := vo.NewSentence(reason)
 	if e4 != nil {
-		return N{}, e3
+		return T{}, e3
 	}
 	bookIDVo, e5 := vo.FromStringToID(bookID)
 	if e5 != nil {
-		return N{}, e5
+		return T{}, e5
 	}
-	n := N{
+	n := T{
 		id:          idVo,
 		title:       titleVo,
 		description: descriptionVo,
@@ -56,14 +56,14 @@ func New(
 
 // WithCreatedAt sets createdAt to Narrative.
 func WithCreatedAt(createdAt time.Time) Option {
-	return func(e *N) {
+	return func(e *T) {
 		e.createdAt = &createdAt
 	}
 }
 
 // WithUpdatedAt sets updatedAt to Narrative.
 func WithUpdatedAt(updatedAt time.Time) Option {
-	return func(e *N) {
+	return func(e *T) {
 		e.updatedAt = &updatedAt
 	}
 }
@@ -73,8 +73,8 @@ func Create(
 	title string,
 	description string,
 	reason string,
-	book bookshelf.Booker,
-	participant participant.P,
+	book shelf.Booker,
+	participant participant.T,
 ) (C, error) {
 	if !participant.CanCreate() {
 		return C{}, nil

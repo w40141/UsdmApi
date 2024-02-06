@@ -5,12 +5,12 @@ import "github.com/w40141/UsdmApi/domain/vo"
 
 // CreateRepository is a repository interface for Narrative.
 type CreateRepository interface {
-	Save(narrative C) (N, error)
+	Save(narrative C) (T, error)
 }
 
 // WriteRepository is a repository interface for Narrative.
 type WriteRepository interface {
-	Get(ids []vo.ID) ([]N, error)
+	Get(ids []vo.ID) ([]T, error)
 }
 
 // DeleteRepository is a repository interface for Narrative.
