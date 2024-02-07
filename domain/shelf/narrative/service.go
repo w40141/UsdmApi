@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/shelf"
-	"github.com/w40141/UsdmApi/domain/shelf/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -74,7 +73,7 @@ func Create(
 	description string,
 	reason string,
 	book shelf.Booker,
-	participant participant.T,
+	participant shelf.Participanter,
 ) (C, error) {
 	if !participant.CanCreate() {
 		return C{}, nil

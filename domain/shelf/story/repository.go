@@ -5,7 +5,7 @@ import "github.com/w40141/UsdmApi/domain/vo"
 
 // Repository is a repository for Story.
 type Repository interface {
-	Save(story Story) error
-	Get(ids []vo.ID) ([]Story, error)
+	Save(story T) error
+	Get(ids []vo.ID) ([]T, error)
 	Delete(id vo.ID) error
 }

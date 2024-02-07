@@ -1,12 +1,12 @@
 // Package authority defines the entity object for user authority.
 package authority
 
-import "github.com/w40141/UsdmApi/domain/shelf"
-
-var _ shelf.Authoritier = (*Viewer)(nil)
+import "github.com/w40141/UsdmApi/domain/user"
 
 // Viewer is the authority of viewer.
 type Viewer struct{}
+
+var _ user.Authoritier = (*Viewer)(nil)
 
 // CanDelete returns whether the Viewer can delete.
 func (r *Viewer) CanDelete() bool {

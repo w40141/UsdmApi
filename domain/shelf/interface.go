@@ -3,73 +3,60 @@ package shelf
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
-// Booker is a type of legend.
+// Booker is a type of book.
 type Booker interface {
-	ID() vo.ID
-	ParentOfStory() error
-	ParentOfEpisode() error
-	ParentOfScene() error
+	ParentOfStory
+	ParentOfEpisode
+	ParentOfScene
 }
 
 // Narrativer is a type of narrative.
 type Narrativer interface {
-	ID() vo.ID
-	ParentOfStory() error
-	ParentOfScene() error
+	ParentOfStory
+	ParentOfScene
 }
 
 // Storyer is a type of story.
 type Storyer interface {
-	ID() vo.ID
-	ParentOfScene() error
-	ParentOfEpisode() error
+	ParentOfEpisode
+	ParentOfScene
 }
 
 // Episoder is a type of episode.
 type Episoder interface {
-	ID() vo.ID
-	ParentOfScene() error
+	ParentOfScene
 }
 
 // Scener is a type of scene.
 type Scener interface {
-	ID() vo.ID
+	Parent
 }
 
 // ParentOfStory is a type that can be the parent of story.
 type ParentOfStory interface {
 	ParentOfStory() error
-	ID() vo.ID
-}
-
-// ParentOfScene is a type that can be the parent of scene.
-type ParentOfScene interface {
-	ParentOfScene() error
-	ID() vo.ID
+	Parent
 }
 
 // ParentOfEpisode is a type that can be the parent of episode.
 type ParentOfEpisode interface {
 	ParentOfEpisode() error
-	ID() vo.ID
+	Parent
 }
 
-// Deletable is a type that can be deleted.
-type Deletable interface {
+// ParentOfScene is a type that can be the parent of scene.
+type ParentOfScene interface {
+	ParentOfScene() error
+	Parent
+}
+
+// Parent is a type that can be the parent.
+type Parent interface {
 	ID() vo.ID
-	CanDelete() bool
 }
 
 // Participanter is a type that can be a participant.
 type Participanter interface {
-	CanDelete() bool
-	CanInvite() bool
-	CanCreate() bool
-	CanEdit() bool
-}
-
-// Authoritier is a type that can be an authority.
-type Authoritier interface {
 	CanDelete() bool
 	CanInvite() bool
 	CanCreate() bool

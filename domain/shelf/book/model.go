@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/shelf"
-	"github.com/w40141/UsdmApi/domain/shelf/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -30,46 +29,43 @@ type D struct {
 	id vo.ID
 }
 
-// CanDelete implements shelf.Deletable.
-func (*D) CanDelete() bool {
-	return true
-}
-
 // ID implements shelf.Deletable.
-func (*D) ID() vo.ID {
-	panic("unimplemented")
+func (d *D) ID() vo.ID {
+	return d.id
 }
 
-// ID implements bookshelf.Book.
+var _ shelf.Booker = (*T)(nil)
+
+// ID implements shelf.Booker.
 func (t T) ID() vo.ID {
 	return t.id
 }
 
-// ParentOfEpisode implements bookshelf.Book.
+// Book implements shelf.Booker.
+func (*T) Book() error {
+	return nil
+}
+
+// ParentOfEpisode implements shelf.Booker.
 func (*T) ParentOfEpisode() error {
 	return nil
 }
 
-// ParentOfScene implements bookshelf.Book.
+// ParentOfScene implements shelf.Booker.
 func (*T) ParentOfScene() error {
 	return nil
 }
 
-// ParentOfStory implements bookshelf.Book.
+// ParentOfStory implements shelf.Booker.
 func (*T) ParentOfStory() error {
 	return nil
 }
-
-var (
-	_ shelf.Booker    = (*T)(nil)
-	_ shelf.Deletable = (*D)(nil)
-)
 
 // Update updates a Book.
 func (t *T) Update(
 	title string,
 	description string,
-	participant participant.T,
+	participant shelf.Participanter,
 ) (T, error) {
 	if t == nil {
 		return T{}, fmt.Errorf("book is nil")
@@ -88,7 +84,7 @@ func (t *T) Update(
 
 // Delete deletes a Book.
 func (t *T) Delete(
-	participant participant.T,
+	participant shelf.Participanter,
 ) (D, error) {
 	if t == nil {
 		return D{}, fmt.Errorf("book is nil")

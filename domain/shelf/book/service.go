@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/shelf/participant"
+	"github.com/w40141/UsdmApi/domain/shelf"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -16,7 +16,7 @@ type Option func(*T)
 func Create(
 	title string,
 	description string,
-	participant participant.T,
+	participant shelf.Participanter,
 ) (C, error) {
 	if !participant.CanCreate() {
 		return C{}, fmt.Errorf("participant can not create")

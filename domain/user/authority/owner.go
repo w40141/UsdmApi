@@ -1,12 +1,12 @@
 // Package authority defines the entity object for user authority.
 package authority
 
-import "github.com/w40141/UsdmApi/domain/shelf"
-
-var _ shelf.Authoritier = (*Owner)(nil)
+import "github.com/w40141/UsdmApi/domain/user"
 
 // Owner is the authority of owner.
 type Owner struct{}
+
+var _ user.Authoritier = (*Owner)(nil)
 
 // CanDelete returns whether the owner can delete.
 func (t *Owner) CanDelete() bool {

@@ -3,9 +3,9 @@ package episode
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
-// Repository is a repository interface for Legend.
+// Repository is a repository interface for Episode.
 type Repository interface {
-	Save(legend Episode) error
-	Get(ids []vo.ID) ([]Episode, error)
+	Save(episode T) error
+	Get(ids []vo.ID) ([]T, error)
 	Delete(id vo.ID) error
 }

@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/w40141/UsdmApi/domain/shelf"
-	"github.com/w40141/UsdmApi/domain/shelf/participant"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -34,10 +33,7 @@ type D struct {
 	id vo.ID
 }
 
-var (
-	_ shelf.ParentOfStory = (*T)(nil)
-	_ shelf.Narrativer    = (*T)(nil)
-)
+var _ shelf.Narrativer = (*T)(nil)
 
 // ParentOfScene implements request.Narrativer.
 func (*T) ParentOfScene() error {
@@ -74,7 +70,7 @@ func (n *T) Update(
 	title string,
 	description string,
 	reason string,
-	participant participant.T,
+	participant shelf.Participanter,
 ) (T, error) {
 	if n == nil {
 		return T{}, fmt.Errorf("narrative is nil")
@@ -93,7 +89,7 @@ func (n *T) Update(
 
 // Delete deletes a Narrative.
 func (n *T) Delete(
-	participant participant.T,
+	participant shelf.Participanter,
 ) (D, error) {
 	if n == nil {
 		return D{}, fmt.Errorf("book is nil")

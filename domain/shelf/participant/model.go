@@ -5,19 +5,18 @@ import (
 	"fmt"
 
 	"github.com/w40141/UsdmApi/domain/shelf"
+	"github.com/w40141/UsdmApi/domain/user"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
-var _ shelf.Participanter = (*T)(nil)
-
-type authoritier shelf.Authoritier
-
 // T is an entity object for Participant.
 type T struct {
-	authority authoritier
+	authority user.Authoritier
 	memberID  vo.ID
 	legendID  vo.ID
 }
+
+var _ shelf.Participanter = (*T)(nil)
 
 // CanDelete returns whether the participant can delete.
 func (t *T) CanDelete() bool {
@@ -41,7 +40,7 @@ func (t *T) CanEdit() bool {
 
 // Update is update a authority of Participant.
 func (t *T) Update(
-	authority authoritier,
+	authority user.Authoritier,
 ) (T, error) {
 	if !t.CanInvite() {
 		return T{}, fmt.Errorf("participant is nil")
@@ -57,10 +56,10 @@ func (t *T) Update(
 func (t *T) Invite(
 	memberID string,
 	legendID string,
-	authority authoritier,
+	authority user.Authoritier,
 ) (T, error) {
 	if !t.CanInvite() {
-		return T{}, fmt.Errorf("participant can not create")
+		return T{}, fmt.Errorf("participant can not invite")
 	}
 	memberIDVo, e1 := vo.FromStringToID(memberID)
 	if e1 != nil {

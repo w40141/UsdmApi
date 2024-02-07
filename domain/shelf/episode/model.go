@@ -9,8 +9,8 @@ import (
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
-// Episode is an entity object for user story or usecase.
-type Episode struct {
+// T is an entity object for Episode.
+type T struct {
 	createdAt   *time.Time
 	updatedAt   *time.Time
 	title       vo.Title
@@ -21,61 +21,56 @@ type Episode struct {
 	bookID      vo.ID
 }
 
-var _ shelf.Episoder = (*Episode)(nil)
+// C is a struct for creating a new Episode.
+type C struct {
+	title       vo.Title
+	description vo.Sentence
+	reason      vo.Sentence
+	storyID     vo.ID
+	bookID      vo.ID
+}
+
+// D is a struct for deleting a Episode.
+type D struct {
+	id vo.ID
+}
+
+var _ shelf.Episoder = (*T)(nil)
 
 // Description implements request.Episoder.
-func (e Episode) Description() string {
+func (e T) Description() string {
 	return e.description.String()
 }
 
 // ID implements request.Episoder.
-func (e Episode) ID() vo.ID {
+func (e T) ID() vo.ID {
 	return e.id
 }
 
 // ParentOfScene implements request.Episoder.
-func (*Episode) ParentOfScene() error {
+func (*T) ParentOfScene() error {
 	panic("unimplemented")
 }
 
 // Reason implements request.Episoder.
-func (e Episode) Reason() string {
+func (e T) Reason() string {
 	return e.reason.String()
 }
 
 // Title implements request.Episoder.
-func (e Episode) Title() string {
+func (e T) Title() string {
 	return e.title.String()
 }
 
-// Create creates a new Episode.
-func Create(
-	title string,
-	description string,
-	reason string,
-	book shelf.Booker,
-	story shelf.ParentOfEpisode,
-) (Episode, error) {
-	id := vo.NewID().String()
-	return New(
-		id,
-		title,
-		description,
-		reason,
-		book.ID(),
-		story.ID(),
-	)
-}
-
 // Update updates a Episode.
-func (e *Episode) Update(
+func (e *T) Update(
 	title string,
 	description string,
 	reason string,
-	story bookshelf.ParentOfEpisode,
-) (Episode, error) {
+	story shelf.Storyer,
+) (T, error) {
 	if e == nil {
-		return Episode{}, fmt.Errorf("episode is nil")
+		return T{}, fmt.Errorf("episode is nil")
 	}
 	return New(
 		e.id.String(),
@@ -83,71 +78,21 @@ func (e *Episode) Update(
 		description,
 		reason,
 		e.bookID.String(),
-		story.ID(),
+		story.ID().String(),
 	)
 }
 
-// Option is a functional option for Episode.
-type Option func(*Episode)
-
-// New creates a new Episode.
-func New(
-	id string,
-	title string,
-	description string,
-	reason string,
-	bookID string,
-	storyID string,
-	options ...Option,
-) (Episode, error) {
-	idVo, e1 := vo.FromStringToID(id)
-	if e1 != nil {
-		return Episode{}, nil
+// Delete deletes a Episode.
+func (e *T) Delete(
+	participant shelf.Participanter,
+) (D, error) {
+	if e == nil {
+		return D{}, fmt.Errorf("episode is nil")
 	}
-	titleVo, e2 := vo.NewTitle(title)
-	if e2 != nil {
-		return Episode{}, e2
+	if !participant.CanDelete() {
+		return D{}, fmt.Errorf("participant can not delete")
 	}
-	descriptionVo, e3 := vo.NewSentence(description)
-	if e3 != nil {
-		return Episode{}, e3
-	}
-	reasonVo, e4 := vo.NewSentence(reason)
-	if e4 != nil {
-		return Episode{}, e4
-	}
-	bookIDVo, e5 := vo.FromStringToID(bookID)
-	if e5 != nil {
-		return Episode{}, e5
-	}
-	storyIDVo, e6 := vo.FromStringToID(storyID)
-	if e6 != nil {
-		return Episode{}, e6
-	}
-	e := Episode{
-		id:          idVo,
-		title:       titleVo,
-		description: descriptionVo,
-		reason:      reasonVo,
-		bookID:      bookIDVo,
-		storyID:     storyIDVo,
-	}
-	for _, option := range options {
-		option(&e)
-	}
-	return e, nil
-}
-
-// WithCreatedAt is a functional option for adding created at.
-func WithCreatedAt(createdAt time.Time) Option {
-	return func(t *Episode) {
-		t.createdAt = &createdAt
-	}
-}
-
-// WithUpdatedAt is a functional option for adding updated at.
-func WithUpdatedAt(updatedAt time.Time) Option {
-	return func(t *Episode) {
-		t.updatedAt = &updatedAt
-	}
+	return D{
+		id: e.id,
+	}, nil
 }

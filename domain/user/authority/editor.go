@@ -1,12 +1,12 @@
 // Package authority defines the entity object for user authority.
 package authority
 
-import "github.com/w40141/UsdmApi/domain/shelf"
-
-var _ shelf.Authoritier = (*Editor)(nil)
+import "github.com/w40141/UsdmApi/domain/user"
 
 // Editor is the authority of editor.
 type Editor struct{}
+
+var _ user.Authoritier = (*Editor)(nil)
 
 // CanDelete returns whether the editor can delete.
 func (t *Editor) CanDelete() bool {
