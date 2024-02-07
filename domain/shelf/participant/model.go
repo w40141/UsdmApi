@@ -4,54 +4,62 @@ package participant
 import (
 	"fmt"
 
-	"github.com/w40141/UsdmApi/domain/shelf/authority"
+	"github.com/w40141/UsdmApi/domain/shelf"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
+var _ shelf.Participanter = (*T)(nil)
+
+type authoritier shelf.Authoritier
+
 // T is an entity object for Participant.
 type T struct {
-	authority authority.T
+	authority authoritier
 	memberID  vo.ID
 	legendID  vo.ID
 }
 
-// CanCreate returns whether the participant can create.
-func (p *T) CanCreate() bool {
-	if p.authority == nil {
-		return false
-	}
-	return p.authority.CanCreate()
+// CanDelete returns whether the participant can delete.
+func (t *T) CanDelete() bool {
+	return t.authority.CanDelete()
 }
 
-// CanDelete returns whether the participant can delete.
-func (p *T) CanDelete() bool {
-	if p.authority == nil {
-		return false
-	}
-	return p.authority.CanDelete()
+// CanInvite returns whether the participant can invite.
+func (t *T) CanInvite() bool {
+	return t.authority.CanInvite()
+}
+
+// CanCreate returns whether the participant can create.
+func (t *T) CanCreate() bool {
+	return t.authority.CanCreate()
+}
+
+// CanEdit returns whether the participant can edit.
+func (t *T) CanEdit() bool {
+	return t.authority.CanEdit()
 }
 
 // Update is update a authority of Participant.
-func (p *T) Update(
-	authority authority.T,
+func (t *T) Update(
+	authority authoritier,
 ) (T, error) {
-	if p == nil {
+	if !t.CanInvite() {
 		return T{}, fmt.Errorf("participant is nil")
 	}
 	return T{
-		memberID:  p.memberID,
-		legendID:  p.legendID,
+		memberID:  t.memberID,
+		legendID:  t.legendID,
 		authority: authority,
 	}, nil
 }
 
 // Invite is create a new Participant.
-func (p *T) Invite(
+func (t *T) Invite(
 	memberID string,
 	legendID string,
-	authority authority.T,
+	authority authoritier,
 ) (T, error) {
-	if !p.CanCreate() {
+	if !t.CanInvite() {
 		return T{}, fmt.Errorf("participant can not create")
 	}
 	memberIDVo, e1 := vo.FromStringToID(memberID)

@@ -74,9 +74,13 @@ func (n *T) Update(
 	title string,
 	description string,
 	reason string,
+	participant participant.T,
 ) (T, error) {
 	if n == nil {
 		return T{}, fmt.Errorf("narrative is nil")
+	}
+	if !participant.CanEdit() {
+		return T{}, fmt.Errorf("participant can not update")
 	}
 	return New(
 		n.id.String(),

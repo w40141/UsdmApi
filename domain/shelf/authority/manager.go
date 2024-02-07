@@ -3,32 +3,32 @@ package authority
 
 import "github.com/w40141/UsdmApi/domain/shelf"
 
-var _ shelf.Authoritier = (*Editor)(nil)
+var _ shelf.Authoritier = (*Manager)(nil)
 
-// Editor is the authority of editor.
-type Editor struct{}
+// Manager is the authority of editor.
+type Manager struct{}
 
 // CanDelete returns whether the editor can delete.
-func (t *Editor) CanDelete() bool {
+func (t *Manager) CanDelete() bool {
 	return false
 }
 
 // CanInvite returns whether the editor can invite.
-func (t *Editor) CanInvite() bool {
-	return false
+func (t *Manager) CanInvite() bool {
+	return t != nil
 }
 
 // CanCreate returns whether the editor can create.
-func (t *Editor) CanCreate() bool {
+func (t *Manager) CanCreate() bool {
 	return t != nil
 }
 
 // CanEdit returns whether the editor can edit.
-func (t *Editor) CanEdit() bool {
+func (t *Manager) CanEdit() bool {
 	return t != nil
 }
 
-// NewEditor is create a new Editor.
-func NewEditor() *Editor {
+// NewManager is create a new Manager.
+func NewManager() *Editor {
 	return &Editor{}
 }

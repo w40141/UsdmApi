@@ -1,4 +1,4 @@
-// Package bookshelf is defined for domain model.
+// Package shelf is defined for domain model.
 package shelf
 
 import "github.com/w40141/UsdmApi/domain/vo"
@@ -58,4 +58,20 @@ type ParentOfEpisode interface {
 type Deletable interface {
 	ID() vo.ID
 	CanDelete() bool
+}
+
+// Participanter is a type that can be a participant.
+type Participanter interface {
+	CanDelete() bool
+	CanInvite() bool
+	CanCreate() bool
+	CanEdit() bool
+}
+
+// Authoritier is a type that can be an authority.
+type Authoritier interface {
+	CanDelete() bool
+	CanInvite() bool
+	CanCreate() bool
+	CanEdit() bool
 }

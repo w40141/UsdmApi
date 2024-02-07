@@ -74,7 +74,7 @@ func (t *T) Update(
 	if t == nil {
 		return T{}, fmt.Errorf("book is nil")
 	}
-	if !participant.CanCreate() {
+	if !participant.CanEdit() {
 		return T{}, fmt.Errorf("participant can not update")
 	}
 	return New(

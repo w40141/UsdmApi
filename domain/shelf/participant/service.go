@@ -2,7 +2,6 @@
 package participant
 
 import (
-	"github.com/w40141/UsdmApi/domain/shelf/authority"
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
@@ -10,7 +9,7 @@ import (
 func New(
 	memberID string,
 	legendID string,
-	authority authority.T,
+	authority authoritier,
 ) (T, error) {
 	memberIDVo, e1 := vo.FromStringToID(memberID)
 	if e1 != nil {
