@@ -3,9 +3,18 @@ package story
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
-// Repository is a repository for Story.
-type Repository interface {
-	Save(story T) error
+// WriteRepository is a repository interface for Episode.
+type WriteRepository interface {
+	Create(story C) (T, error)
+	Update(story T) (T, error)
+}
+
+// ReadRepository is a repository interface for Episode.
+type ReadRepository interface {
 	Get(ids []vo.ID) ([]T, error)
-	Delete(id vo.ID) error
+}
+
+// DeleteRepository is a repository interface for Episode.
+type DeleteRepository interface {
+	Delete(obj D) error
 }

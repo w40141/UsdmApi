@@ -3,13 +3,14 @@ package narrative
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
-// CreateRepository is a repository interface for Narrative.
-type CreateRepository interface {
-	Save(narrative C) (T, error)
-}
-
 // WriteRepository is a repository interface for Narrative.
 type WriteRepository interface {
+	Create(narrative C) (T, error)
+	Update(narrative T) (T, error)
+}
+
+// ReadRepository is a repository interface for Narrative.
+type ReadRepository interface {
 	Get(ids []vo.ID) ([]T, error)
 }
 

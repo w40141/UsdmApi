@@ -3,9 +3,18 @@ package scene
 
 import "github.com/w40141/UsdmApi/domain/vo"
 
-// Repository is a repository interface for scene.
-type Repository interface {
-	Save(scene T) error
+// WriteRepository is a repository interface for Scene.
+type WriteRepository interface {
+	Create(scene C) (T, error)
+	Update(scene T) (T, error)
+}
+
+// ReadRepository is a repository interface for Scene.
+type ReadRepository interface {
 	Get(ids []vo.ID) ([]T, error)
-	Delete(id vo.ID) error
+}
+
+// DeleteRepository is a repository interface for Scene.
+type DeleteRepository interface {
+	Delete(obj D) error
 }

@@ -9,20 +9,20 @@ import (
 // New is create a new Participant.
 func New(
 	memberID string,
-	legendID string,
+	bookID string,
 	authority user.Authoritier,
 ) (T, error) {
 	memberIDVo, e1 := vo.FromStringToID(memberID)
 	if e1 != nil {
 		return T{}, e1
 	}
-	lengendIDVo, e2 := vo.FromStringToID(legendID)
+	bookIDVo, e2 := vo.FromStringToID(bookID)
 	if e2 != nil {
 		return T{}, e2
 	}
 	return T{
 		memberID:  memberIDVo,
-		legendID:  lengendIDVo,
+		bookID:    bookIDVo,
 		authority: authority,
 	}, nil
 }

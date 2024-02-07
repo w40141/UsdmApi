@@ -13,7 +13,13 @@ import (
 type T struct {
 	authority user.Authoritier
 	memberID  vo.ID
-	legendID  vo.ID
+	bookID    vo.ID
+}
+
+// D is a data object for Participant.
+type D struct {
+	memberID vo.ID
+	bookID   vo.ID
 }
 
 var _ shelf.Participanter = (*T)(nil)
@@ -47,7 +53,7 @@ func (t *T) Update(
 	}
 	return T{
 		memberID:  t.memberID,
-		legendID:  t.legendID,
+		bookID:    t.bookID,
 		authority: authority,
 	}, nil
 }
@@ -71,7 +77,18 @@ func (t *T) Invite(
 	}
 	return T{
 		memberID:  memberIDVo,
-		legendID:  lengendIDVo,
+		bookID:    lengendIDVo,
 		authority: authority,
+	}, nil
+}
+
+// Delete is delete a Participant.
+func (t *T) Delete() (D, error) {
+	if !t.CanDelete() {
+		return D{}, fmt.Errorf("participant can not delete")
+	}
+	return D{
+		memberID: t.memberID,
+		bookID:   t.bookID,
 	}, nil
 }
