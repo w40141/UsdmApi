@@ -37,18 +37,16 @@ func Create(
 	}, nil
 }
 
-// Option is a functional option for Scene.
-type Option func(*T)
-
-// New creates a new Scene.
-func New(
+// NewT creates a new Scene.
+func NewT(
 	id string,
 	title string,
 	description string,
 	reason string,
 	bookID string,
 	storyID string,
-	options ...Option,
+	createdAt time.Time,
+	updatedAt time.Time,
 ) (T, error) {
 	idVo, e1 := vo.FromStringToID(id)
 	if e1 != nil {
@@ -74,30 +72,14 @@ func New(
 	if e6 != nil {
 		return T{}, e6
 	}
-	t := T{
+	return T{
 		id:          idVo,
 		title:       titleVo,
 		description: descriptionVo,
 		reason:      reasonVo,
 		bookID:      bookIDVo,
 		parentID:    storyIDVo,
-	}
-	for _, option := range options {
-		option(&t)
-	}
-	return t, nil
-}
-
-// WithCreatedAt is a functional option for adding created at.
-func WithCreatedAt(createdAt time.Time) Option {
-	return func(t *T) {
-		t.createdAt = &createdAt
-	}
-}
-
-// WithUpdatedAt is a functional option for adding updated at.
-func WithUpdatedAt(updatedAt time.Time) Option {
-	return func(t *T) {
-		t.updatedAt = &updatedAt
-	}
+		createdAt:   createdAt,
+		updatedAt:   updatedAt,
+	}, nil
 }

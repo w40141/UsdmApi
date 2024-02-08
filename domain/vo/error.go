@@ -19,3 +19,9 @@ var ErrTitleOverLength = errors.New("title must be less than or equal to 100 cha
 var ErrDescriptionOverLength = errors.New(
 	"description must be less than or equal to 1000 characters",
 )
+
+// ErrParticipantCantDelete is an error for participant can't delete.
+var ErrParticipantCantDelete = errors.New("participant can't delete")
+
+// ErrNilScene is an error for nil scene.
+var ErrNilScene = errors.New("scene is nil")

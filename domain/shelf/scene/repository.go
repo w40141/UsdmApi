@@ -5,8 +5,7 @@ import "github.com/w40141/UsdmApi/domain/vo"
 
 // WriteRepository is a repository interface for Scene.
 type WriteRepository interface {
-	Create(scene C) (T, error)
-	Update(scene T) (T, error)
+	Save(scene M) (T, error)
 }
 
 // ReadRepository is a repository interface for Scene.
