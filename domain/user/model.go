@@ -7,8 +7,8 @@ import (
 	"github.com/w40141/UsdmApi/domain/vo"
 )
 
-// User is a entity model for user.
-type User struct {
+// Member is a entity model for user.
+type Member struct {
 	createdAt time.Time
 	updatedAt time.Time
 	name      vo.Name
@@ -20,16 +20,16 @@ func New(
 	id string,
 	name string,
 	options ...Option,
-) (User, error) {
+) (Member, error) {
 	idVo, e1 := vo.FromStringToID(id)
 	if e1 != nil {
-		return User{}, nil
+		return Member{}, nil
 	}
 	nameVo, e2 := vo.NewName(name)
 	if e2 != nil {
-		return User{}, nil
+		return Member{}, nil
 	}
-	u := User{
+	u := Member{
 		id:   idVo,
 		name: nameVo,
 	}
@@ -40,18 +40,18 @@ func New(
 }
 
 // Option is a functional option for User.
-type Option func(*User)
+type Option func(*Member)
 
 // WithCreatedAt is a functional option for User.
 func WithCreatedAt(createdAt time.Time) Option {
-	return func(u *User) {
+	return func(u *Member) {
 		u.createdAt = createdAt
 	}
 }
 
 // WithUpdatedAt is a functional option for User.
 func WithUpdatedAt(updatedAt time.Time) Option {
-	return func(u *User) {
+	return func(u *Member) {
 		u.updatedAt = updatedAt
 	}
 }

@@ -8,7 +8,7 @@ import (
 )
 
 // Create creates a new User.
-func Create(name string) (User, error) {
+func Create(name string) (Member, error) {
 	id := vo.NewID().String()
 	return New(
 		id,
@@ -19,7 +19,7 @@ func Create(name string) (User, error) {
 }
 
 // Update updates a User.
-func (u User) Update(name string) (User, error) {
+func (u Member) Update(name string) (Member, error) {
 	return New(
 		u.id.String(),
 		name,

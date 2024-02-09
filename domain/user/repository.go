@@ -5,7 +5,7 @@ import "github.com/w40141/UsdmApi/domain/vo"
 
 // Repository is a repository interface for User.
 type Repository interface {
-	Save(user User) error
-	Get(ids []vo.ID) ([]User, error)
+	Save(user Member) error
+	Get(ids []vo.ID) ([]Member, error)
 	Delete(id vo.ID) error
 }

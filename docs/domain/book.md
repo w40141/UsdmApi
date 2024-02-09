@@ -2,17 +2,12 @@
 
 ```marmeid
 erDiagram
-    MEMBER {
-      string id
-      string name
-      string authority_id
-    }
     PARTICIPANT {
       member_id member
       authority_id authority
-      legend_id legend
+      book_id BOOK
     }
-    LEGEND {
+    BOOK {
       string id
       string title
       string description
@@ -24,7 +19,7 @@ erDiagram
       string title
       string description
       string reason
-      legend_id legend
+      book_id BOOK
       date created_at
       date updated_at
     }
@@ -33,7 +28,7 @@ erDiagram
       string title
       string description
       string reason
-      legend_id legend
+      book_id BOOK
       parent_id parent
       date created_at
       date updated_at
@@ -43,7 +38,7 @@ erDiagram
       string title
       string description
       string reason
-      legend_id legend
+      book_id BOOK
       story_id story
       date created_at
       date updated_at
@@ -53,7 +48,7 @@ erDiagram
       string title
       string description
       string reason
-      legend_id legend
+      book_id BOOK
       parent_id parent
       date created_at
       date updated_at
@@ -62,17 +57,17 @@ erDiagram
       string id
       string name
     }
-    MEMBER ||--|{ PARTICIPANT: has
-    PARTICIPANT }|--|{ LEGEND: participant
+    PARTICIPANT }|--|{ BOOK: participant
     AUTHORITY ||--o{ PARTICIPANT: has
-    LEGEND ||--o{ SCENE: belong
-    LEGEND ||--o{ EPISODE: belong
-    LEGEND |o--o{ STORY: has
-    LEGEND ||--o{ STORY: belong
-    LEGEND ||--o{ NARRATIVE: belong
-    NARRATIVE |o--o{ SCENE: has
+    BOOK ||--o{ NARRATIVE: belong
+    BOOK ||--o{ STORY: belong
+    BOOK ||--o{ EPISODE: belong
+    BOOK ||--o{ SCENE: belong
     NARRATIVE |o--o{ STORY: has
+    NARRATIVE |o--o{ SCENE: has
+    STORY }o--o| BOOK: has
     STORY ||--o{ EPISODE: has
-    SCENE }o--o| STORY: has
-    SCENE }o--o| EPISODE: has
+    STORY |o--o{ SCENE: has
+    EPISODE |o--o{ SCENE: has
+    SCENE }o--o| BOOK: has
 ```
