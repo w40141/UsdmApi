@@ -1,4 +1,4 @@
-# Request ER diagram
+# Shelf ER diagram
 
 ```marmeid
 erDiagram
