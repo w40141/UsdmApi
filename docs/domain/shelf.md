@@ -49,23 +49,12 @@ SCENE {
   date created_at
   date updated_at
 }
-PARTICIPANT {
-  member_id member
-  authority_id authority
-  saga_id saga
-}
-AUTHORITY {
-  string id
-  string name
-}
 
-AUTHORITY ||--o{ PARTICIPANT: has
-PARTICIPANT }|--|{ SAGA: participant
 SAGA ||--o{ BOOK: belong
-SAGA ||--o{ STORY: belong
 SAGA |o--o{ STORY: has
-BOOK |o--o{ STORY: has
-SAGA ||--o{ EPISODE: belong
+STORY }o--|| SAGA: belong
+STORY }o--o| BOOK: has
+EPISODE }o--|| SAGA: belong
 STORY ||--o{ EPISODE: has
 SAGA ||--o{ SCENE: belong
 BOOK |o--o{ SCENE: has
