@@ -2,126 +2,76 @@
 
 ```marmeid
 erDiagram
-    MEMBER {
-      string id
-      string name
-      string authority_id
-    }
-    PROP {
-      string id
-      string title
-      string description
-      string reason
-      status_id status
-      prop_id parent_id
-      member_id user
-      member_id creator
-      legend_id legend
-      date start
-      date end
-      date created_at
-      date updated_at
-    }
-    PARTICIPANT {
-      member_id member
-      authority_id authority
-      legend_id legend
-    }
-    LEGEND {
-      string id
-      string title
-      string description
-      date created_at
-      date updated_at
-    }
-    SPRINT {
-      string id
-      legend_id legend
-      date start
-      date end
-    }
-    NARRATIVE {
-      string id
-      string title
-      string description
-      string reason
-      legend_id legend
-      date start
-      date end
-      date created_at
-      date updated_at
-    }
-    STORY {
-      string id
-      string title
-      string description
-      string reason
-      legend_id legend
-      parent_id parent
-      date start
-      date end
-      date created_at
-      date updated_at
-    }
-    EPISODE {
-      string id
-      string title
-      string description
-      string reason
-      legend_id legend
-      story_id story
-      date start
-      date end
-      date created_at
-      date updated_at
-    }
-    SCENE {
-      string id
-      string title
-      string description
-      string reason
-      legend_id legend
-      parent_id parent
-      date start
-      date end
-      date created_at
-      date updated_at
-    }
-    INCORPORATION {
-      parent_id belonging
-      prop_id id
-    }
-    STATUS {
-      string id
-      string name
-    }
-    AUTHORITY {
-      string id
-      string name
-    }
-    MEMBER ||--|{ PARTICIPANT: has
-    PARTICIPANT }|--|{ LEGEND: participant
-    AUTHORITY ||--o{ PARTICIPANT: has
-    LEGEND ||--|{ NARRATIVE: belong
-    LEGEND ||--|{ STORY: belong
-    LEGEND ||--|{ EPISODE: belong
-    LEGEND ||--|{ SCENE: belong
-    SPRINT }o--|| LEGEND: has
-    PROP }o--o| SPRINT: has
-    PROP }o--|| LEGEND: has
-    LEGEND ||--o{ NARRATIVE: has
-    LEGEND |o--o{ STORY: has
-    NARRATIVE |o--o{ STORY: has
-    STORY ||--o{ EPISODE: has
-    STORY |o--o{ SCENE: has
-    EPISODE ||--o{ SCENE: has
-    MEMBER ||--o{ PROP: create
-    MEMBER ||--o{ PROP: use
-    PROP ||--o{ PROP: has
-    STATUS ||--o{ PROP: has
-    PROP ||--|| INCORPORATION: has
-    INCORPORATION }o--o| NARRATIVE: has
-    INCORPORATION }o--o| STORY: has
-    INCORPORATION }o--o| EPISODE: has
-    INCORPORATION }o--o| SCENE: has
+SCENE {
+  string id
+  string title
+  saga_id saga
+  story_id story
+  character_id creator
+  date created_at
+  date updated_at
+}
+PROP {
+  string id
+  string title
+  string description
+  string reason
+  status_id status
+  character_id creator
+  saga_id saga
+  date created_at
+  date updated_at
+}
+WORKER {
+  prop_id prop
+  character_id worker
+  date start
+  date end
+}
+SPRINT {
+  string id
+  saga_id saga
+  date start
+  date end
+}
+STATUS {
+  string id
+  string name
+}
+CHARACTER {
+  string id
+  member_id member
+  ability_id ability
+  saga_id saga
+}
+SAGA {
+  string id
+  string title
+  string description
+  character_id creator
+  date created_at
+  date updated_at
+}
+INSPRINT {
+  sprint_id sprint
+  prop_id prop
+}
+INCORPORATE {
+  scene_id scene
+  prop_id prop
+}
+
+CHARACTER }|--|| SAGA: apper
+CHARACTER }|--|| SCENE: create
+CHARACTER }|--|| PROP: create
+CHARACTER }|--|| WORKER: has
+WORKER }|--|| PROP: work
+SAGA ||--o{ SPRINT: has
+SAGA ||--|| PROP: has
+SAGA ||--o{ SCENE: has
+SCENE ||--|| INCORPORATE: has
+INSPRINT ||--|| PROP: has
+SPRINT ||--|| INSPRINT: has
+INCORPORATE ||--|| PROP: has
+PROP }o--|| STATUS: has
 ```
