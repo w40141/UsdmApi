@@ -11,13 +11,12 @@ SAGA {
   string id
   string title
   string description
-  character_id creator
+  member_id creator
   date created_at
   date updated_at
 }
 CHARACTER {
-  string id
-  member_id member
+  account_id account
   ability_id ability
   saga_id saga
 }
@@ -51,6 +50,7 @@ WORLD ||--o{ TRADITION: has
 TRADITION ||--|| SAGA: has
 AUTHORITY ||--o{ MEMBER: has
 ACCOUNT ||--|{ MEMBER: has
-WORLD ||--|{ MEMBER: has
-MEMBER ||--o{ CHARACTER: has
+WORLD ||--|{ MEMBER: exist
+MEMBER ||--o{ SAGA: create
+ACCOUNT ||--o{ CHARACTER: has
 ```

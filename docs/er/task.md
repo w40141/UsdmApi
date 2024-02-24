@@ -2,12 +2,24 @@
 
 ```marmeid
 erDiagram
+CHARACTER {
+  account_id account
+  ability_id ability
+  saga_id saga
+}
+SAGA {
+  string id
+  string title
+  string description
+  member_id creator
+  date created_at
+  date updated_at
+}
 SCENE {
   string id
   string title
-  saga_id saga
   story_id story
-  character_id creator
+  character_id character
   date created_at
   date updated_at
 }
@@ -18,13 +30,13 @@ PROP {
   string reason
   status_id status
   character_id creator
-  saga_id saga
   date created_at
   date updated_at
 }
-WORKER {
+PROPRIETOR {
+  string id
+  character_id user
   prop_id prop
-  character_id worker
   date start
   date end
 }
@@ -38,20 +50,6 @@ STATUS {
   string id
   string name
 }
-CHARACTER {
-  string id
-  member_id member
-  ability_id ability
-  saga_id saga
-}
-SAGA {
-  string id
-  string title
-  string description
-  character_id creator
-  date created_at
-  date updated_at
-}
 INSPRINT {
   sprint_id sprint
   prop_id prop
@@ -62,13 +60,11 @@ INCORPORATE {
 }
 
 CHARACTER }|--|| SAGA: apper
-CHARACTER }|--|| SCENE: create
-CHARACTER }|--|| PROP: create
-CHARACTER }|--|| WORKER: has
-WORKER }|--|| PROP: work
+PROPRIETOR }|--|| PROP: use
 SAGA ||--o{ SPRINT: has
-SAGA ||--|| PROP: has
-SAGA ||--o{ SCENE: has
+CHARACTER ||--|| PROP: create
+CHARACTER ||--o{ SCENE: create
+CHARACTER ||--o{ PROPRIETOR: use
 SCENE ||--|| INCORPORATE: has
 INSPRINT ||--|| PROP: has
 SPRINT ||--|| INSPRINT: has
