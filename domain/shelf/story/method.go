@@ -10,59 +10,59 @@ import (
 )
 
 // ParentOfEpisode implements request.ParentOfEpisode.
-func (*T) ParentOfEpisode() error {
+func (*E) ParentOfEpisode() error {
 	panic("unimplemented")
 }
 
 // Description implements request.Storyer.
-func (s T) Description() string {
+func (s E) Description() string {
 	return s.description.String()
 }
 
 // ID implements request.Storyer.
-func (s T) ID() vo.ID {
+func (s E) ID() vo.ID {
 	return s.id
 }
 
 // Reason implements request.Storyer.
-func (s T) Reason() string {
+func (s E) Reason() string {
 	return s.reason.String()
 }
 
 // Title implements request.Storyer.
-func (s T) Title() string {
+func (s E) Title() string {
 	return s.title.String()
 }
 
 // ParentID getter
-func (s T) ParentID() string {
+func (s E) ParentID() string {
 	return s.parentID.String()
 }
 
 // CreateAt getter
-func (s T) CreateAt() (time.Time, bool) {
+func (s E) CreateAt() (time.Time, bool) {
 	return *s.createAt, s.createAt != nil
 }
 
 // UpdateAt getter
-func (s T) UpdateAt() (time.Time, bool) {
+func (s E) UpdateAt() (time.Time, bool) {
 	return *s.updateAt, s.updateAt != nil
 }
 
 // ParentOfScene implements request.Storyer.
-func (*T) ParentOfScene() error {
+func (*E) ParentOfScene() error {
 	panic("unimplemented")
 }
 
 // Update updates a Story.
-func (s *T) Update(
+func (s *E) Update(
 	title string,
 	description string,
 	reason string,
 	parent shelf.ParentOfStory,
-) (T, error) {
+) (E, error) {
 	if s == nil {
-		return T{}, fmt.Errorf("story is nil")
+		return E{}, fmt.Errorf("story is nil")
 	}
 	return New(
 		s.id.String(),
@@ -75,7 +75,7 @@ func (s *T) Update(
 }
 
 // Delete deletes a Story.
-func (s *T) Delete(
+func (s *E) Delete(
 	participant shelf.Participanter,
 ) (D, error) {
 	if s == nil {

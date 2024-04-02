@@ -1,5 +1,5 @@
-// Package story defines the entity object for user story.
-package story
+// Package saga defines services.
+package saga
 
 import (
 	"fmt"
@@ -9,13 +9,11 @@ import (
 	"github.com/w40141/UsdmApi/domain/shelf/vo"
 )
 
-// Create creates a new story.
+// Create creates a new Story.
 func Create(
 	title string,
 	description string,
-	reason string,
-	book shelf.Booker,
-	parent shelf.ParentOfStory,
+	creator string,
 	participant shelf.Participanter,
 ) (C, error) {
 	if !participant.CanCreate() {
@@ -42,17 +40,12 @@ func Create(
 	}, nil
 }
 
-// Option is a functional option for story.
-type Option func(*E)
-
-// New creates a new story.
+// New creates a new Saga.
 func New(
 	id string,
 	title string,
 	description string,
-	reason string,
-	bookID string,
-	parentID string,
+	creator string,
 	options ...Option,
 ) (E, error) {
 	idVo, e1 := vo.FromStringToID(id)
@@ -67,31 +60,24 @@ func New(
 	if e3 != nil {
 		return E{}, e3
 	}
-	reasonVo, e4 := vo.NewSentence(reason)
+	creatorID, e4 := vo.FromStringToID(creator)
 	if e4 != nil {
-		return E{}, e3
-	}
-	bookIDVo, e5 := vo.FromStringToID(bookID)
-	if e5 != nil {
-		return E{}, e5
-	}
-	parentIDVo, e6 := vo.FromStringToID(parentID)
-	if e6 != nil {
-		return E{}, e6
+		return E{}, e4
 	}
 	s := E{
-		id:          idVo,
+		id:          vo.SagaID(idVo),
 		title:       titleVo,
 		description: descriptionVo,
-		reason:      reasonVo,
-		bookID:      bookIDVo,
-		parentID:    parentIDVo,
+		creator:     vo.MemberID(creatorID),
 	}
 	for _, option := range options {
 		option(&s)
 	}
 	return s, nil
 }
+
+// Option is a functional option for Story.
+type Option func(*E)
 
 // WithCreateAt is a functional option for adding create time.
 func WithCreateAt(createAt time.Time) func(*E) {

@@ -1,12 +1,10 @@
 // Package model defines the entity object for user authority.
 package model
 
-import "github.com/w40141/UsdmApi/domain/shelf/authority"
-
 // Editor is the authority of editor.
 type Editor struct{}
 
-var _ authority.Authoritier = (*Editor)(nil)
+var _ Authoritier = (*Editor)(nil)
 
 // CanDelete returns whether the editor can delete.
 func (t *Editor) CanDelete() bool {
@@ -28,7 +26,12 @@ func (t *Editor) CanEdit() bool {
 	return t != nil
 }
 
-// NewEditor is create a new Editor.
+// Value returns the authority type.
+func (t *Editor) Value() AurhorityType {
+	return EditorType
+}
+
+// NewEditor is create a new editor.
 func NewEditor() *Editor {
 	return &Editor{}
 }

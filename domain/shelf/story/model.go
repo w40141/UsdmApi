@@ -4,34 +4,35 @@ package story
 import (
 	"time"
 
-	"github.com/w40141/UsdmApi/domain/shelf"
-	"github.com/w40141/UsdmApi/domain/vo"
+	"github.com/w40141/UsdmApi/domain/shelf/scene"
+	"github.com/w40141/UsdmApi/domain/shelf/vo"
 )
 
-// T is an entity object for Story.
-type T struct {
-	createAt    *time.Time
-	updateAt    *time.Time
+// E is an entity object for story.
+type E struct {
+	id          vo.StoryID
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
-	id          vo.ID
-	bookID      vo.ID
-	parentID    vo.ID
+	book        vo.BookID
+	sences      []scene.T
+	// ancestor    *vo.StoryID
+	// descendant  *vo.StoryID
+	creator  vo.AccountID
+	createAt *time.Time
+	updateAt *time.Time
 }
 
-// C is a struct for creating a new Story.
+// C is a struct for creating a new story.
 type C struct {
 	title       vo.Title
 	description vo.Sentence
 	reason      vo.Sentence
-	bookID      vo.ID
-	parentID    vo.ID
+	book        vo.BookID
+	creator     vo.AccountID
 }
 
-// D is a struct for deleting a Story.
+// D is a struct for deleting a story.
 type D struct {
 	id vo.ID
 }
-
-var _ shelf.Storyer = (*T)(nil)
