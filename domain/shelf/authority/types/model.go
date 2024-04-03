@@ -1,5 +1,5 @@
-// Package model defines interface.
-package model
+// Package types defines interface.
+package types
 
 // Authoritier is an interface for user authority.
 type Authoritier interface {
@@ -7,19 +7,20 @@ type Authoritier interface {
 	CanInvite() bool
 	CanCreate() bool
 	CanEdit() bool
-	Value() AurhorityType
+	Value() Type
+	Compare(a Authoritier) int
 }
 
-// AurhorityType is an int representing authorities.
-type AurhorityType int
+// Type is an int representing authorities.
+type Type int
 
 const (
 	// EditorType is the authority of editor.
-	EditorType AurhorityType = 1
+	EditorType Type = 1
 	// ManagerType is the authority of manager.
-	ManagerType AurhorityType = 2
+	ManagerType Type = 2
 	// OwnerType is the authority of owner.
-	OwnerType AurhorityType = 3
+	OwnerType Type = 3
 	// ViewerType is the authority of viewer.
-	ViewerType AurhorityType = 4
+	ViewerType Type = 4
 )

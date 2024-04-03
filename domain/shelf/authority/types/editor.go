@@ -1,10 +1,21 @@
-// Package model defines the entity object for user authority.
-package model
+// Package types defines the entity object for user authority.
+package types
+
+var _ (Authoritier) = (*Editor)(nil)
 
 // Editor is the authority of editor.
 type Editor struct{}
 
-var _ Authoritier = (*Editor)(nil)
+// Compare returns other
+func (t *Editor) Compare(a Authoritier) int {
+	if t.Value() > a.Value() {
+		return 1
+	}
+	if t.Value() == a.Value() {
+		return 0
+	}
+	return -1
+}
 
 // CanDelete returns whether the editor can delete.
 func (t *Editor) CanDelete() bool {
@@ -27,7 +38,7 @@ func (t *Editor) CanEdit() bool {
 }
 
 // Value returns the authority type.
-func (t *Editor) Value() AurhorityType {
+func (t *Editor) Value() Type {
 	return EditorType
 }
 

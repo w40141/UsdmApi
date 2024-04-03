@@ -24,4 +24,16 @@ var (
 	ErrInvalidAuthorityType = errors.New("invalid authority type")
 	// ErrCannotInvite is an error for cannot invite.
 	ErrCannotInvite = errors.New("cannot invite")
+	// ErrAccountSame is an error for account is same.
+	ErrAccountSame = errors.New("account is same")
+	// ErrCannotDelete is an error for cannot delete.
+	ErrCannotDelete = errors.New("cannot delete")
+	// ErrDiffWorld is an error for different world.
+	ErrDiffWorld = errors.New("different world")
+	// ErrSameMember is an error for same member.
+	ErrSameMember = errors.New("same member")
+	// ErrCannotEdit is an error for cannot edit.
+	ErrCannotEdit = errors.New("cannot edit")
+	// ErrHigherAuthority is an error for higher authority.
+	ErrHigherAuthority = errors.New("higher authority")
 )

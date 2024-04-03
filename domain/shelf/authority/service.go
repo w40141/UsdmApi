@@ -2,21 +2,21 @@
 package authority
 
 import (
-	"github.com/w40141/UsdmApi/domain/shelf/authority/model"
+	"github.com/w40141/UsdmApi/domain/shelf/authority/types"
 	"github.com/w40141/UsdmApi/domain/shelf/vo"
 )
 
 // New creates a new authority.
-func New(t model.AurhorityType) (model.Authoritier, error) {
+func New(t types.Type) (types.Authoritier, error) {
 	switch t {
-	case model.ViewerType:
-		return model.NewViewer(), nil
-	case model.EditorType:
-		return model.NewEditor(), nil
-	case model.OwnerType:
-		return model.NewOwner(), nil
-	case model.ManagerType:
-		return model.NewManager(), nil
+	case types.ViewerType:
+		return types.NewViewer(), nil
+	case types.EditorType:
+		return types.NewEditor(), nil
+	case types.OwnerType:
+		return types.NewOwner(), nil
+	case types.ManagerType:
+		return types.NewManager(), nil
 	default:
 		return nil, vo.ErrInvalidAuthorityType
 	}
