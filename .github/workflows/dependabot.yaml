@@ -1,3 +1,4 @@
+---
 name: Dependabot auto-merge
 on: pull_request_target
 permissions:
@@ -6,6 +7,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     env:
       PR_URL: ${{github.event.pull_request.html_url}}

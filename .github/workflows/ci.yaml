@@ -1,3 +1,4 @@
+---
 name: CI
 permissions:
   contents: read
@@ -23,6 +24,7 @@ on:
 jobs:
   remove_label:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI'))"
     permissions:
       issues: write
@@ -42,6 +44,7 @@ jobs:
             await github.rest.issues.removeLabel(params)
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
     steps:
       - uses: actions/checkout@v4
@@ -53,6 +56,7 @@ jobs:
         run: go test ./... -v
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
     steps:
       - uses: actions/checkout@v4
@@ -70,6 +74,7 @@ jobs:
         run: go build -o /dev/null ./...
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
     steps:
       - uses: actions/checkout@v4
@@ -83,6 +88,7 @@ jobs:
           version: latest
   format:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
     needs:
       - test
