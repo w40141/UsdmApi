@@ -1,4 +1,3 @@
----
 name: CI
 permissions:
   contents: read
@@ -25,7 +24,7 @@ jobs:
   remove_label:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI'))"
+    if: ${{(github.event.action == 'labeled') && (github.event.label.name == 'CI')}}
     permissions:
       issues: write
       pull-requests: write
@@ -45,7 +44,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || (github.event_name == 'push')}}
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -57,7 +56,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || (github.event_name == 'push')}}
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -75,7 +74,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || (github.event_name == 'push')}}
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -89,7 +88,7 @@ jobs:
   format:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || ((github.event_name == 'push'))"
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'CI')) || (github.event_name == 'push')}}
     needs:
       - test
       - build

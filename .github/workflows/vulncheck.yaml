@@ -1,4 +1,3 @@
----
 name: Vulnerability
 env:
   IMAGE: built_image
@@ -32,7 +31,7 @@ jobs:
   remove_label:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck'))"
+    if: ${{(github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')}}
     permissions:
       issues: write
       pull-requests: write
@@ -52,7 +51,7 @@ jobs:
   govulncheck:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')"
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -69,7 +68,7 @@ jobs:
   dockle_trivy_job:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')"
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
