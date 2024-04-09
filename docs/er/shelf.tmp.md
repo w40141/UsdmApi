@@ -1,28 +1,26 @@
-# SHELF ER diagram
+
+# Shelf ER diagram
 
 ```marmeid
 erDiagram
-ACCOUNT {
-  string id
-  string name
-  string email
+
+MEMBER {
+  account_id account
+  world_id world
+  authority_id authority
+}
+CHARACTER {
+  account_id account
+  ability_id ability
+  saga_id saga
 }
 SAGA {
   string id
   string title
   string description
-  account_id owner
+  member_id creator
   date created_at
   date updated_at
-}
-CHARACTER {
-  account_id account
-  ablity_id ablity
-  book_id appearance
-}
-ABLITY {
-  string id
-  string name
 }
 BOOK {
   string id
@@ -31,10 +29,6 @@ BOOK {
   character_id creator
   date created_at
   date updated_at
-}
-COLLECTION {
-  saga_id SAGA
-  book_id BOOK
 }
 TOC {
   book_id book
@@ -62,11 +56,8 @@ SCENE {
   date updated_at
 }
 
-SAGA ||--o{ COLLECTION: has
-COLLECTION |o--|| BOOK: has
-CHARACTER }|--|| SAGA: create
-ABLITY ||--o{ CHARACTER: has
-ACCOUNT ||--|{ CHARACTER: has
+MEMBER ||--o{ SAGA: create
+CHARACTER }|--|| SAGA: apper
 CHARACTER }|--|| BOOK: create
 CHARACTER }|--|| STORY: create
 CHARACTER }|--|| SCENE: create
