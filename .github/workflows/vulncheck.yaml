@@ -30,7 +30,8 @@ on:
 jobs:
   remove_label:
     runs-on: ubuntu-latest
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck'))"
+    timeout-minutes: 10
+    if: ${{(github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')}}
     permissions:
       issues: write
       pull-requests: write
@@ -49,7 +50,8 @@ jobs:
             await github.rest.issues.removeLabel(params)
   govulncheck:
     runs-on: ubuntu-latest
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')"
+    timeout-minutes: 10
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -57,6 +59,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
+          check-latest: true
       - name: Install govulncheck
         run: go install golang.org/x/vuln/cmd/govulncheck@latest
         shell: bash
@@ -65,7 +68,8 @@ jobs:
         shell: bash
   dockle_trivy_job:
     runs-on: ubuntu-latest
-    if: "((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')"
+    timeout-minutes: 10
+    if: ${{((github.event.action == 'labeled') && (github.event.label.name == 'Vulncheck')) || (github.event_name == 'push') || (github.event_name == 'schedule')}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
