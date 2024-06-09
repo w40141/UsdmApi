@@ -14,7 +14,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/build.yaml
+      - .github/workflows/ci.yaml
       - '**.go'
       - go.mod
       - go.sum
@@ -82,7 +82,7 @@ jobs:
         with:
           go-version-file: "go.mod"
       - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v4
+        uses: golangci/golangci-lint-action@v6
         with:
           version: latest
   format:
